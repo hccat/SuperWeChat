@@ -33,9 +33,9 @@
 
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:name="com.easemob.chatuidemo.permission.C2D_MESSAGE"
+    <permission android:name="cn.ucai.superwechat.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.easemob.chatuidemo.permission.C2D_MESSAGE" />
+    <uses-permission android:name="cn.ucai.superwechat.permission.C2D_MESSAGE" />
     
     
     <application
