@@ -2,7 +2,7 @@ package cn.ucai.superwechat;
 
 public interface I {
 
-	public static interface User {
+	interface User {
 		String TABLE_NAME = "t_superwechat_user";
 		String USER_ID = "m_user_id"; // 主键
 		String USER_NAME = "m_user_name"; // 用户账号
@@ -208,4 +208,8 @@ public interface I {
 	String REQUEST_FIND_GROUP_BY_ID = "find_group_by_group_id";
 	/** 客户端发送的根据群组环信id查找群组请求 */
 	String REQUEST_FIND_GROUP_BY_HXID = "find_group_by_group_hxid";
+	/** 下载用户头像的网路请求*/
+	String REQUEST_DOWNLOAD_AVATAR_USER = SuperWeChatApplication.SERVER_ROOT+"?"+KEY_REQUEST+"="+REQUEST_DOWNLOAD_AVATAR+"&"+AVATAR_TYPE+"=";
+	/** 下载群组头像的网路请求*/
+	String REQUEST_DOWNLOAD_AVATAR_GROUP = SuperWeChatApplication.SERVER_ROOT+"?"+KEY_REQUEST+"="+REQUEST_DOWNLOAD_GROUP_AVATAR+"&"+AVATAR_TYPE+"=";
 }
