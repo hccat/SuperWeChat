@@ -18,6 +18,14 @@ import android.content.Context;
 
 import com.easemob.EMCallBack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import cn.ucai.superwechat.bean.Contact;
+import cn.ucai.superwechat.bean.Group;
+import cn.ucai.superwechat.bean.Member;
+import cn.ucai.superwechat.bean.User;
+
 public class SuperWeChatApplication extends Application {
 	public static String SERVER_ROOT = "http://10.0.2.2:8080/SuperWeChatServer/Server";
 
@@ -85,7 +93,7 @@ public class SuperWeChatApplication extends Application {
 	/**
 	 * 设置用户名
 	 *
-	 * @param user
+	 * @param username
 	 */
 	public void setUserName(String username) {
 	    hxSDKHelper.setHXId(username);
@@ -108,4 +116,18 @@ public class SuperWeChatApplication extends Application {
 		// 先调用sdk logout，在清理app中自己的数据
 	    hxSDKHelper.logout(isGCM,emCallBack);
 	}
+
+	/** 全局的当前登录对象*/
+	private User user;
+	/** 全局的当前登陆用户的好友列表*/
+	private ArrayList<Contact> contactList = new ArrayList<Contact>();
+	/** 全局的当前登录用户的好友集合*/
+	private HashMap<String,Contact> userList =new HashMap<String,Contact>();
+	/** 全局的群组集合*/
+	private ArrayList<Group> groupList =new ArrayList<Group>();
+	/**全局的当前公共群列表*/
+	private ArrayList<Group> publicGroupList = new ArrayList<Group>();
+	/**全局的群组成员列表*/
+	private HashMap<String,ArrayList<Member>> groupMembers = new HashMap<String, ArrayList<Member>>();
+
 }
