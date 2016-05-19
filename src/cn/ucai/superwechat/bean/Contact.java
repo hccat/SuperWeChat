@@ -11,7 +11,20 @@ public class Contact extends User implements java.io.Serializable {
 	 */
 	// Fields
 
-	private Integer mcontactId;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Contact contact = (Contact) o;
+
+		return mcontactId.equals(contact.mcontactId);
+
+	}
+			@Override
+			public int hashCode() {
+				return mcontactId.hashCode();
+			}private Integer mcontactId;
 	private Integer mcontactUserId;
 	private String mcontactUserName;
 	private Integer mcontactCid;
