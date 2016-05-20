@@ -46,7 +46,7 @@
                 android:src="@drawable/icon_account" />
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/et_username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -78,7 +78,7 @@
                 android:src="@drawable/icon_pwd" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -100,6 +100,7 @@
             android:orientation="horizontal" >
 
             <Button
+                android:id="@+id/btnlogin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
@@ -107,7 +108,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_register_bg"
                 android:gravity="center"
-                android:onClick="register"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"
                 android:text="@string/register"
@@ -115,6 +115,7 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/btnregister"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
