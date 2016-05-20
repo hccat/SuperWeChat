@@ -13,8 +13,9 @@
  */
 package cn.ucai.superwechat.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -26,21 +27,25 @@ import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.exceptions.EaseMobException;
 
+import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.listener.OnSetAvatarListener;
 
 /**
  * 注册页
  * 
  */
 public class RegisterActivity extends BaseActivity {
-	Context mContext;
+	Activity mContext;
 
+	OnSetAvatarListener mOnSetAvatarListener;
 	private EditText userNameEditText;
 	private EditText passwordEditText;
 	private EditText userNickEditText;
 	private EditText confirmPwdEditText;
 	ImageView mIVAvatar;
+	String avatarName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,31 @@ public class RegisterActivity extends BaseActivity {
 	private void setListener() {
 		setOnRegisterListenner();
 		setOnLoginListener();
+		setOnSetAvatarListener();
+	}
+
+	private void setOnSetAvatarListener() {
+		findViewById(R.id.layout_user_avatar).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnSetAvatarListener = new OnSetAvatarListener(mContext,R.id.layout_register,getAvatarName(), I.AVATAR_TYPE_USER_PATH);
+			}
+
+
+		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode==RESULT_OK) {
+			mOnSetAvatarListener.setAvatar(requestCode,data,mIVAvatar);
+		}
+	}
+
+	private String getAvatarName() {
+		avatarName = System.currentTimeMillis() + "";
+		return avatarName;
 	}
 
 	private void setOnLoginListener() {
