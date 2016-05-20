@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <string name="app_name">superwechat</string>
+
+    <string name="app_name">SuperWeChat</string>
     <string name="text_ack_msg">Read</string>
     <string name="text_delivered_msg">Delivered</string>
     <string name="back">Back</string>
@@ -101,10 +101,11 @@
     <string name="Group_of_Lord">The group owner</string>
     <string name="Introduction">Brief</string>
     <string name="To_join_the_chat">Join the group</string>
-    <string name="login">login</string>
-    <string name="user_name">username</string>
-    <string name="password">password</string>
-    <string name="register">register</string>
+    <string name="send_message">Send Message</string>
+    <string name="login">Login</string>
+    <string name="user_name">User name</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
     <string name="confirmpassword">Confirm password</string>
     <string name="downwaiting">Downloading the file, please try again later</string>
     <string name="mute">Mute</string>
@@ -120,7 +121,7 @@
     <string name="is_down_please_wait">Downloading video, please try again later</string>
     <string name="Exit_the_group_chat">Exit the group</string>
     <string name="Please_enter_a_username">Please enter a username</string>
-    
+
     <string name="not_add_myself">"Can't add myself"</string>
     <string name="This_user_is_already_your_friend">This user is already your friend</string>
     <string name="Add_a_friend">Let me to be your friend!</string>
@@ -131,6 +132,7 @@
     <string name="please_check">key validation error!Please on AndroidManifest.xml file check the key set</string>
     <string name="expression">[expression]</string>
     <string name="Removed_from_the_failure">Removed fail</string>
+    <string name="Delete_successfully">Removed successfuly</string>
     <string name="be_removing">Be removing</string>
     <string name="call_duration">call duration</string>
     <string name="Refused">Refused</string>
@@ -194,6 +196,7 @@
     <string name="temporary_does_not">Currently the video size greater than 10M is not supported!</string>
     <string name="Video_footage">Video record</string>
     <string name="User_name_cannot_be_empty">User name cannot be empty!</string>
+    <string name="User_name_cannot_be_wd">user name can be num,word！</string>
     <string name="Password_cannot_be_empty">Password cannot be empty!</string>
     <string name="please_set_the_current">"Please set the current user's nickname \ n to ios offline push not userid but Nick, see comments"</string>
     <string name="Is_landing">logining..</string>
@@ -216,12 +219,14 @@
     <string name="Open_the_equipment_failure">Open the equipment failure!</string>
     <string name="Confirm_password_cannot_be_empty">Confirm password cannot be empty!</string>
     <string name="Two_input_password">Inconsistent password, please enter again!</string>
+    <string name="upload_avatar_failed">upload avatar failed!</string>
     <string name="Is_the_registered">Registering..</string>
     <string name="Registered_successfully">Registered successfully</string>
     <string name="network_anomalies">Network is not available, please check the network!</string>
     <string name="User_already_exists">User already existed!</string>
     <string name="registration_failed_without_permission">Registration failed, without permission!</string>
     <string name="Registration_failed">Registration failed:</string>
+    <string name="cancel_register_failed">cancel register failed</string>
     <string name="Are_logged_out">Logging out</string>
     <string name="Download_the_pictures">Download the pictures: 0%</string>
     <string name="Download_the_pictures_new">Download the pictures:</string>
@@ -252,7 +257,7 @@
     <string name="Is_download_voice_click_later">Downloading the voice message, click later</string>
     <string name="Send_the_following_pictures">Send the following pictures?</string>
     <string name="search_new">Search</string>
-    
+
     <string name="Delete_the_contact">Delete the contact</string>
     <string name="Move_into_the_blacklist_new">Move into the blacklist</string>
     <string name="Change_the_group_name">Change group name</string>
@@ -295,4 +300,52 @@
     <string name="toast_updatenick_fail">update nickname fail!</string>
     <string name="toast_updatephoto_success">update photo success!</string>
     <string name="toast_updatephoto_fail">update photo fail!</string>
+    <string name="Add_buddy_success">add buddy success</string>
+    <string name="Add_buddy_failed">add buddy failed</string>
+    <string name="Nick_name_cannot_be_empty">Nick name cannot be empty!</string>
+    <string name="Group_name_existed">Group name existed</string>
+    <string name="Create_groups_Success">Success to create groups</string>
+    <string name="Create_groups_Failed">Failed to create groups</string>
+    <string name="photo">photo</string>
+    <string name="near_people_hint">See nearby people\'s function will get your location information, your location information will be kept for a period of time. Through the list of the top right corner to remove functions can be manually remove location information at any time.</string>
+    <string name="msg_900">msg:connection success</string>
+    <string name="msg_901">msg:connection fail</string>
+    <string name="msg_902">msg:upload avatar success</string>
+    <string name="msg_903">msg:upload avatar fail</string>
+    <string name="msg_101">msg:register success</string>
+    <string name="msg_102">msg:register username exists</string>
+    <string name="msg_103">msg:register upload avatar fail</string>
+    <string name="msg_104">msg:register upload avatar success</string>
+    <string name="msg_105">msg:register fail</string>
+    <string name="msg_106">msg:unregister success</string>
+    <string name="msg_107">msg:unregister fail</string>
+    <string name="msg_201">msg:contact firended</string>
+    <string name="msg_202">msg:contact fail</string>
+    <string name="msg_301">msg:group create scuuess</string>
+    <string name="msg_302">msg:group hxid exists</string>
+    <string name="msg_303">msg:group create fail</string>
+    <string name="msg_304">msg:group add member fail</string>
+    <string name="msg_305">msg:group add member scuuess</string>
+    <string name="msg_306">msg:group unkonw</string>
+    <string name="msg_307">msg:group same name</string>
+    <string name="msg_308">msg:group update name success</string>
+    <string name="msg_309">msg:group update name fail</string>
+    <string name="msg_310">msg:group delete member success</string>
+    <string name="msg_311">msg:group delete member fail</string>
+    <string name="msg_312">msg:group delete success</string>
+    <string name="msg_313">msg:group delete fail</string>
+    <string name="msg_401">msg:login unknow user</string>
+    <string name="msg_402">msg:login error password</string>
+    <string name="msg_403">msg:login success</string>
+    <string name="msg_404">msg:user same nick</string>
+    <string name="msg_405">msg:user update nick success</string>
+    <string name="msg_406">msg:user update nick fail</string>
+    <string name="msg_407">msg:user same password</string>
+    <string name="msg_408">msg:user update password success</string>
+    <string name="msg_409">msg:user update password fail</string>
+    <string name="msg_501">msg:location upload success</string>
+    <string name="msg_502">msg:location upload fail</string>
+    <string name="msg_503">msg:location update success</string>
+    <string name="msg_504">msg:location update fail</string>
+    <string name="msg_999">msg:unknow</string>
 </resources>

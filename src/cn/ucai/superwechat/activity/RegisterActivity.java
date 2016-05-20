@@ -47,6 +47,10 @@ public class RegisterActivity extends BaseActivity {
 	ImageView mIVAvatar;
 	String avatarName;
 
+	String username;
+	String pwd;
+	String nick;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -113,20 +117,26 @@ public class RegisterActivity extends BaseActivity {
 		findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final String username = userNameEditText.getText().toString().trim();
-				final String pwd = passwordEditText.getText().toString().trim();
+				username = userNameEditText.getText().toString().trim();
+				pwd = passwordEditText.getText().toString().trim();
 				String confirm_pwd = confirmPwdEditText.getText().toString().trim();
 				if (TextUtils.isEmpty(username)) {
-					Toast.makeText(mContext, getResources().getString(R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
 					userNameEditText.requestFocus();
+					userNameEditText.setError( getResources().getString(R.string.User_name_cannot_be_empty));
 					return;
+				} else if (username.matches("[\\w][\\w\\d]+")) {
+					userNameEditText.requestFocus();
+					userNameEditText.setError( getResources().getString(R.string.User_name_cannot_be_wd));
+				} else if (TextUtils.isEmpty(nick)) {
+					userNickEditText.requestFocus();
+					userNickEditText.setError(getResources().getString(R.string.Nick_name_cannot_be_empty));
 				} else if (TextUtils.isEmpty(pwd)) {
-					Toast.makeText(mContext, getResources().getString(R.string.Password_cannot_be_empty), Toast.LENGTH_SHORT).show();
 					passwordEditText.requestFocus();
+					passwordEditText.setError(getResources().getString(R.string.Password_cannot_be_empty));
 					return;
 				} else if (TextUtils.isEmpty(confirm_pwd)) {
-					Toast.makeText(mContext, getResources().getString(R.string.Confirm_password_cannot_be_empty), Toast.LENGTH_SHORT).show();
 					confirmPwdEditText.requestFocus();
+					confirmPwdEditText.setError(getResources().getString(R.string.Confirm_password_cannot_be_empty));
 					return;
 				} else if (!pwd.equals(confirm_pwd)) {
 					Toast.makeText(mContext, getResources().getString(R.string.Two_input_password), Toast.LENGTH_SHORT).show();
