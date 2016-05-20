@@ -44,9 +44,9 @@ public class SuperWeChatApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		RequestManager.init(applicationContext);
         applicationContext = this;
-        instance = this;
+		instance = this;
+		RequestManager.init(applicationContext);
 
         /**
          * this function will initialize the HuanXin SDK

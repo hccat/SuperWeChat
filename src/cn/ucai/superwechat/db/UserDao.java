@@ -16,7 +16,7 @@ public class UserDao extends SQLiteOpenHelper{
     public static final String Id = "_id";
     public static final String TABLE_NAME = "user";
 
-    public UserDao(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public UserDao(Context context) {
 
         super(context, "user.db", null, 1);
     }
