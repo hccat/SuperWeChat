@@ -111,7 +111,9 @@ public class LoginActivity extends BaseActivity {
 		});
 	}
 
-
+	/**
+	 * 登录
+	 */
 	private void setLoginListener() {
 		findViewById(R.id.btnlogin).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -250,8 +252,10 @@ public class LoginActivity extends BaseActivity {
 		List<EMUser> users = new ArrayList<EMUser>(userlist.values());
 		dao.saveContactList(users);
 	}
-	
 
+	/**
+	 * 注册
+	 */
 	public void setRegisterListener() {
 		findViewById(R.id.btnregister).setOnClickListener(new View.OnClickListener() {
 			@Override
