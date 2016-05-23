@@ -23,12 +23,12 @@ public class UserDao extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" ("+
-                I.User.USER_ID+ "INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                I.User.USER_NAME+"varchar unique not null," +
-                I.User.NICK+"varchar,"+
-                I.User.PASSWORD+"varchar,"+
-                I.User.UN_READ_MSG_COUNT+"int default(0)"+
+        String sql = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" " +
+                "("+ I.User.USER_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                I.User.USER_NAME+" varchar unique not null," +
+                I.User.NICK+" varchar,"+
+                I.User.PASSWORD+" varchar,"+
+                I.User.UN_READ_MSG_COUNT+" int default(0)"+
                 ");";
         db.execSQL(sql);
     }
@@ -51,7 +51,7 @@ public class UserDao extends SQLiteOpenHelper{
 
     public User findUserByUserName(String userName) {
         SQLiteDatabase db = getReadableDatabase();
-        String sql ="select * from " + TABLE_NAME + " where " + I.User.USER_NAME + "=?";
+        String sql ="select * from " + TABLE_NAME + " where " + I.User.USER_NAME + " = ? ";
         Cursor c = db.rawQuery(sql, new String[]{userName});
         if (c.moveToNext()) {
             int uid = c.getInt(c.getColumnIndex(I.User.USER_ID));

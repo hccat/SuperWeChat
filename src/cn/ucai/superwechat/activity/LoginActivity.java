@@ -197,6 +197,7 @@ public class LoginActivity extends BaseActivity {
 						startActivity(intent);
 
 						finish();
+						loginSuccess();
 					}
 
 					@Override
@@ -296,7 +297,7 @@ public class LoginActivity extends BaseActivity {
 				public void run() {
 					new DownloadContactListTask(mContext, currentUsername).execute();
 					new DownloadAllGroupTask(mContext,currentUsername).execute();
-					new DownloadPublicGroupTask(mContext, currentUsername, I.PAGE_ID_DEFAULT, I.PAGE_SIZE_DEFAULT);
+					new DownloadPublicGroupTask(mContext, currentUsername, I.PAGE_ID_DEFAULT, I.PAGE_SIZE_DEFAULT).execute();
 				}
 			});
 
