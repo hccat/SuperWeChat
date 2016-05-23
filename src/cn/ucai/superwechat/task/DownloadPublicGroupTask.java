@@ -18,47 +18,46 @@ import cn.ucai.superwechat.utils.Utils;
 /**
  * Created by sks on 2016/5/23.
  */
-public class DownloadAllGroupTask extends BaseActivity {
+public class DownloadPublicGroupTask extends BaseActivity {
     private static final String TAG = DownloadContactListTask.class.getName();
-    Context mContext;
-    String groupname;
+    String public_group;
     String path;
+    Context mContext;
 
-    public DownloadAllGroupTask(Context mContext, String groupname) {
+    public DownloadPublicGroupTask(String public_group, Context mContext) {
+        this.public_group = public_group;
         this.mContext = mContext;
-        this.groupname = groupname;
         initPath();
     }
 
     private void initPath() {
         try {
-            path = new ApiParams()
-                    .with(I.Group.NAME,groupname)
-                    .getRequestUrl(I.REQUEST_DOWNLOAD_GROUPS);
+            path= new ApiParams()
+                    .with(I.Group.NAME,public_group)
+                    .getRequestUrl(I.REQUEST_FIND_PUBLIC_GROUPS);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
 
+    }
     public void execute() {
-        executeRequest(new GsonRequest<Group[]>(path,Group[].class, responseDownloadAllGroupTaskListener(),errorListener()) {
+        executeRequest(new GsonRequest<Group[]>(path,Group[].class,responseDownloadPublicGroupTaskListener(),errorListener()) {
         });
     }
 
-    private Response.Listener<Group[]> responseDownloadAllGroupTaskListener() {
+    private Response.Listener<Group[]> responseDownloadPublicGroupTaskListener() {
         return new Response.Listener<Group[]>() {
             @Override
             public void onResponse(Group[] groups) {
-                if (groups!=null) {
-                    ArrayList<Group> groupList = SuperWeChatApplication.getInstance().getGroupList();
+                if (groups!=null&&groups.length>0) {
+                    ArrayList<Group> groupList =
+                            SuperWeChatApplication.getInstance().getGroupList();
                     ArrayList<Group> list = Utils.array2List(groups);
                     groupList.clear();
                     groupList.addAll(list);
-                    mContext.sendStickyBroadcast(new Intent("update_group_list"));
+                    mContext.sendStickyBroadcast(new Intent("update_public_group"));
                 }
             }
         };
     }
-
-
 }
