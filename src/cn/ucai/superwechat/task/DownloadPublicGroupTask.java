@@ -20,20 +20,26 @@ import cn.ucai.superwechat.utils.Utils;
  */
 public class DownloadPublicGroupTask extends BaseActivity {
     private static final String TAG = DownloadContactListTask.class.getName();
-    String public_group;
+    String username;
     String path;
     Context mContext;
+    int page;
+    int pageSize;
 
-    public DownloadPublicGroupTask(String public_group, Context mContext) {
-        this.public_group = public_group;
+    public DownloadPublicGroupTask(Context mContext,String username,int page,int pageSize) {
+        this.username = username;
         this.mContext = mContext;
+        this.page = page;
+        this.pageSize = pageSize;
         initPath();
     }
 
     private void initPath() {
         try {
             path= new ApiParams()
-                    .with(I.Group.NAME,public_group)
+                    .with(I.Group.NAME, username)
+                    .with(I.PAGE_ID,page+"")
+                    .with(I.PAGE_SIZE,pageSize+"")
                     .getRequestUrl(I.REQUEST_FIND_PUBLIC_GROUPS);
         } catch (Exception e) {
             e.printStackTrace();

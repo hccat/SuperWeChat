@@ -21,19 +21,19 @@ import cn.ucai.superwechat.utils.Utils;
 public class DownloadAllGroupTask extends BaseActivity {
     private static final String TAG = DownloadContactListTask.class.getName();
     Context mContext;
-    String groupname;
+    String username;
     String path;
 
-    public DownloadAllGroupTask(Context mContext, String groupname) {
+    public DownloadAllGroupTask(Context mContext, String username) {
         this.mContext = mContext;
-        this.groupname = groupname;
+        this.username = username;
         initPath();
     }
 
     private void initPath() {
         try {
             path = new ApiParams()
-                    .with(I.Group.NAME,groupname)
+                    .with(I.Group.NAME,username)
                     .getRequestUrl(I.REQUEST_DOWNLOAD_GROUPS);
         } catch (Exception e) {
             e.printStackTrace();
