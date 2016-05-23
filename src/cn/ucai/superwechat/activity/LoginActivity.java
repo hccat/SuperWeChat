@@ -250,6 +250,10 @@ public class LoginActivity extends BaseActivity {
 			public void onResponse(User user) {
 				if (user.isResult()) {
 					saveUser(user);
+					//User user1 = SuperWeChatApplication.getInstance().getUser();
+					user.setMUserPassword(MD5.getData(user.getMUserPassword()));
+					UserDao dao = new UserDao(mContext);
+					dao.addUser(user);
 					loginSuccess();
 				} else {
 					pd.dismiss();
@@ -336,12 +340,12 @@ public class LoginActivity extends BaseActivity {
 		userlist.put(Constant.GROUP_USERNAME, groupUser);
 		
 		// 添加"Robot"
-		EMUser robotUser = new EMUser();
-		String strRobot = getResources().getString(R.string.robot_chat);
-		robotUser.setUsername(Constant.CHAT_ROBOT);
-		robotUser.setNick(strRobot);
-		robotUser.setHeader("");
-		userlist.put(Constant.CHAT_ROBOT, robotUser);
+//		EMUser robotUser = new EMUser();
+//		String strRobot = getResources().getString(R.string.robot_chat);
+//		robotUser.setUsername(Constant.CHAT_ROBOT);
+//		robotUser.setNick(strRobot);
+//		robotUser.setHeader("");
+//		userlist.put(Constant.CHAT_ROBOT, robotUser);
 		
 		// 存入内存
 		((DemoHXSDKHelper)HXSDKHelper.getInstance()).setContactList(userlist);
