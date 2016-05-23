@@ -224,6 +224,7 @@ public class LoginActivity extends BaseActivity {
 		User user = dao.findUserByUserName(currentUsername);
 		if (user != null) {
 			if (user.getMUserPassword().equals(MD5.getData(currentPassword))) {
+				saveUser(user);
 				loginSuccess();
 			} else {
 				pd.dismiss();
