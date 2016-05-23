@@ -49,6 +49,7 @@ public class DownloadContactListTask extends BaseActivity {
         return new Response.Listener<Contact[]>() {
             @Override
             public void onResponse(Contact[] contacts) {
+
                 if (contacts!=null) {
                     ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
                     ArrayList<Contact> list = Utils.array2List(contacts);

@@ -2,14 +2,21 @@ package cn.ucai.superwechat.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cn.ucai.superwechat.applib.controller.HXSDKHelper;
-import cn.ucai.superwechat.DemoHXSDKHelper;
-import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.domain.EMUser;
+import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.picasso.Picasso;
+
+import cn.ucai.superwechat.DemoHXSDKHelper;
+import cn.ucai.superwechat.I;
+import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.applib.controller.HXSDKHelper;
+import cn.ucai.superwechat.bean.Contact;
+import cn.ucai.superwechat.data.RequestManager;
+import cn.ucai.superwechat.domain.EMUser;
 
 public class UserUtils {
     /**
@@ -30,8 +37,13 @@ public class UserUtils {
         }
         return user;
     }
-    
-    /**
+
+	public static Contact getUserBeanInfo(String username) {
+
+		return SuperWeChatApplication.getInstance().getUserList().get(username);
+	}
+
+	/**
      * 设置用户头像
      * @param username
      */
@@ -43,8 +55,29 @@ public class UserUtils {
             Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
         }
     }
-    
-    /**
+
+	public static void setUserBeanAvatar(String username, NetworkImageView imageView) {
+		Contact contact = getUserBeanInfo(username);
+		if (contact!=null&&contact.getMContactCname()!=null) {
+			setUserAvatar(getAvatarPath(username),imageView);
+		}
+	}
+	public static void setUserAvatar(String url, NetworkImageView imageView) {
+		Log.e("main",url);
+		if (url ==null ||url.isEmpty()) return;
+		imageView.setDefaultImageResId(R.drawable.default_avatar);
+		imageView.setImageUrl(url, RequestManager.getImageLoader());
+		imageView.setErrorImageResId(R.drawable.default_avatar);
+
+	}
+
+	private static String getAvatarPath(String username) {
+		if (username==null ||username.isEmpty())
+			return null;
+		return I.REQUEST_DOWNLOAD_AVATAR_USER + username ;
+	}
+
+	/**
      * 设置当前用户头像
      */
 	public static void setCurrentUserAvatar(Context context, ImageView imageView) {
@@ -67,8 +100,21 @@ public class UserUtils {
     		textView.setText(username);
     	}
     }
-    
-    /**
+
+	public static void setUserBeanNick(String username, TextView textView) {
+		Contact contact = getUserBeanInfo(username);
+		if (contact != null) {
+			if (contact.getMUserNick() != null) {
+				textView.setText(contact.getMUserNick());
+			} else if (contact.getMContactCname() != null) {
+				textView.setText(contact.getMContactCname());
+			}
+		} else {
+			textView.setText(username);
+		}
+	}
+
+	/**
      * 设置当前用户昵称
      */
     public static void setCurrentUserNick(TextView textView){
@@ -80,7 +126,7 @@ public class UserUtils {
     
     /**
      * 保存或更新某个用户
-     * @param user
+     * @param
      */
 	public static void saveUserInfo(EMUser newUser) {
 		if (newUser == null || newUser.getUsername() == null) {
