@@ -17,6 +17,7 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -164,6 +165,7 @@ public class ContactlistFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		registerContactlistBroadcastReceiver();
 		//防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 		if(savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
 		    return;
@@ -435,6 +437,10 @@ public class ContactlistFragment extends Fragment {
 			((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().removeSyncContactInfoListener(contactInfoSyncListener);
 		}
 		super.onDestroy();
+		if (mReceiver!=null) {
+			getActivity().unregisterReceiver(mReceiver);
+		}
+
 	}
 	
 	public void showProgressBar(boolean show) {
@@ -521,12 +527,19 @@ public class ContactlistFragment extends Fragment {
 	    
 	}
 
+	ContactlistBroadcastReceiver mReceiver;
 	class ContactlistBroadcastReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-
+			refresh();
 		}
+	}
+
+	private void registerContactlistBroadcastReceiver() {
+		mReceiver = new ContactlistBroadcastReceiver();
+		IntentFilter filter = new IntentFilter("update_contact_list");
+		getActivity().registerReceiver(mReceiver, filter);
 	}
 
 }
