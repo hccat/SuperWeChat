@@ -212,6 +212,65 @@ public class ContactlistFragment extends Fragment {
 		// 设置adapter
 		adapter = new ContactAdapter(getActivity(), R.layout.row_contact, mContactList);
 		listView.setAdapter(adapter);
+		setListener();
+
+
+
+		registerForContextMenu(listView);
+		
+		progressBar = (View) getView().findViewById(R.id.progress_bar);
+
+		contactSyncListener = new HXContactSyncListener();
+		HXSDKHelper.getInstance().addSyncContactListener(contactSyncListener);
+		
+		blackListSyncListener = new HXBlackListSyncListener();
+		HXSDKHelper.getInstance().addSyncBlackListListener(blackListSyncListener);
+		
+		contactInfoSyncListener = new HXContactInfoSyncListener();
+		((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().addSyncContactInfoListener(contactInfoSyncListener);
+		
+		if (!HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
+			progressBar.setVisibility(View.VISIBLE);
+		} else {
+			progressBar.setVisibility(View.GONE);
+		}
+	}
+
+	private void setListener() {
+		setContactItemClickListener();
+		setContactListTouchListener();
+		setAddContactListener();
+	}
+
+	private void setAddContactListener() {
+
+		// 进入添加好友页
+		getView().findViewById(R.id.iv_new_contact).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getActivity(), AddContactActivity.class));
+			}
+		});
+	}
+
+	private void setContactListTouchListener() {
+		listView.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// 隐藏软键盘
+				if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+					if (getActivity().getCurrentFocus() != null)
+						inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+								InputMethodManager.HIDE_NOT_ALWAYS);
+				}
+				return false;
+			}
+		});
+	}
+
+	private void setContactItemClickListener() {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -237,47 +296,6 @@ public class ContactlistFragment extends Fragment {
 				}
 			}
 		});
-		listView.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// 隐藏软键盘
-				if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
-					if (getActivity().getCurrentFocus() != null)
-						inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-								InputMethodManager.HIDE_NOT_ALWAYS);
-				}
-				return false;
-			}
-		});
-
-		ImageView addContactView = (ImageView) getView().findViewById(R.id.iv_new_contact);
-		// 进入添加好友页
-		addContactView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), AddContactActivity.class));
-			}
-		});
-		registerForContextMenu(listView);
-		
-		progressBar = (View) getView().findViewById(R.id.progress_bar);
-
-		contactSyncListener = new HXContactSyncListener();
-		HXSDKHelper.getInstance().addSyncContactListener(contactSyncListener);
-		
-		blackListSyncListener = new HXBlackListSyncListener();
-		HXSDKHelper.getInstance().addSyncBlackListListener(blackListSyncListener);
-		
-		contactInfoSyncListener = new HXContactInfoSyncListener();
-		((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().addSyncContactInfoListener(contactInfoSyncListener);
-		
-		if (!HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
-			progressBar.setVisibility(View.VISIBLE);
-		} else {
-			progressBar.setVisibility(View.GONE);
-		}
 	}
 
 	@Override
