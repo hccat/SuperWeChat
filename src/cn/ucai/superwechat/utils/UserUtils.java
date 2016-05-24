@@ -88,8 +88,9 @@ public class UserUtils {
 			Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
 		}
 	}
-    
-    /**
+
+
+	/**
      * 设置用户昵称
      */
     public static void setUserNick(String username,TextView textView){
