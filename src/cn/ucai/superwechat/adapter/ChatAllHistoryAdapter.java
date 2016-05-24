@@ -13,11 +13,6 @@
  */
 package cn.ucai.superwechat.adapter;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,28 +20,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-import cn.ucai.superwechat.applib.controller.HXSDKHelper;
+import com.android.volley.toolbox.NetworkImageView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatRoom;
 import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMConversation.EMConversationType;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
-import com.easemob.chat.EMConversation.EMConversationType;
+import com.easemob.util.EMLog;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.DemoHXSDKHelper;
+import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import cn.ucai.superwechat.domain.RobotUser;
 import cn.ucai.superwechat.utils.DateUtils;
 import cn.ucai.superwechat.utils.SmileUtils;
 import cn.ucai.superwechat.utils.UserUtils;
-import com.easemob.util.EMLog;
 
 /**
  * 显示所有聊天记录adpater
@@ -81,7 +82,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			holder.unreadLabel = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.unread_msg_number);
 			holder.message = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.message);
 			holder.time = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.time);
-			holder.avatar = (ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.avatar);
+			holder.avatar = (NetworkImageView) convertView.findViewById(cn.ucai.superwechat.R.id.avatar);
 			holder.msgState = convertView.findViewById(cn.ucai.superwechat.R.id.msg_state);
 			holder.list_item_layout = (RelativeLayout) convertView.findViewById(cn.ucai.superwechat.R.id.list_item_layout);
 			convertView.setTag(holder);
@@ -106,7 +107,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
             EMChatRoom room = EMChatManager.getInstance().getChatRoom(username);
             holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
 		}else {
-		    UserUtils.setUserAvatar(getContext(), username, holder.avatar);
+		    UserUtils.setUserBeanAvatar( username, holder.avatar);
 			if (username.equals(Constant.GROUP_USERNAME)) {
 				holder.name.setText("群聊");
 
@@ -122,7 +123,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 					holder.name.setText(username);
 				}
 			}else{
-				UserUtils.setUserNick(username, holder.name);
+				UserUtils.setUserBeanNick(username, holder.name);
 			}
 		}
 
@@ -218,7 +219,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		/** 最后一条消息的时间 */
 		TextView time;
 		/** 用户头像 */
-		ImageView avatar;
+		NetworkImageView avatar;
 		/** 最后一条消息的发送状态 */
 		View msgState;
 		/** 整个list中每一行总布局 */
