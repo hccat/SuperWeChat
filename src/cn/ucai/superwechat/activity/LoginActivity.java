@@ -174,9 +174,9 @@ public class LoginActivity extends BaseActivity {
 					@Override
 					public void onSuccess() {
 						if (!progressShow) {
-							loginAppSever();
 							return;
 						}
+						loginAppSever();
 						// 登陆成功，保存用户名密码
 						SuperWeChatApplication.getInstance().setUserName(currentUsername);
 						SuperWeChatApplication.getInstance().setPassword(currentPassword);
@@ -226,9 +226,9 @@ public class LoginActivity extends BaseActivity {
 	private void loginAppSever() {
 		UserDao dao = new UserDao(mContext);
 		User user = dao.findUserByUserName(currentUsername);
+		Log.e("main", "loginAppServer user" + user);
 		if (user != null) {
 			if (user.getMUserPassword().equals(MD5.getData(currentPassword))) {
-				saveUser(user);
 				loginSuccess();
 			} else {
 				pd.dismiss();
@@ -236,6 +236,7 @@ public class LoginActivity extends BaseActivity {
 		} else {
 			try {
 				String path = new ApiParams().with(I.User.USER_NAME, currentUsername)
+						.with(I.User.PASSWORD,currentPassword)
                         .getRequestUrl(I.REQUEST_LOGIN);
 				executeRequest(new GsonRequest<User>(path,User.class,responseListener(),errorListener()));
 			} catch (Exception e) {
@@ -249,6 +250,7 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onResponse(User user) {
 				if (user.isResult()) {
+					Log.e("main", "responseListener user" + user);
 					saveUser(user);
 					//User user1 = SuperWeChatApplication.getInstance().getUser();
 					user.setMUserPassword(MD5.getData(user.getMUserPassword()));
@@ -265,6 +267,7 @@ public class LoginActivity extends BaseActivity {
 
 	private void saveUser(User user) {
 		SuperWeChatApplication instance = SuperWeChatApplication.getInstance();
+		Log.e("mian","login user="+user);
 		instance.setUser(user);
 		instance.setUserName(currentUsername);
 		instance.setPassword(currentPassword);

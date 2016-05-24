@@ -6,12 +6,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
+
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
@@ -53,8 +55,10 @@ public class SplashActivity extends BaseActivity {
 		super.onStart();
 		if (DemoHXSDKHelper.getInstance().isLogined()) {
 			String username = SuperWeChatApplication.getInstance().getUserName();
-			UserDao dao = new UserDao(mContext);
+            Log.e("main", "userName=" + username);
+            UserDao dao = new UserDao(mContext);
 			User user = dao.findUserByUserName(username);
+			Log.e("main","splash,user="+user);
 			SuperWeChatApplication.getInstance().setUser(user);
 
 			new DownloadContactListTask(mContext, username).execute();

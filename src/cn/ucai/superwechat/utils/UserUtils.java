@@ -15,6 +15,7 @@ import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import cn.ucai.superwechat.bean.Contact;
+import cn.ucai.superwechat.bean.User;
 import cn.ucai.superwechat.data.RequestManager;
 import cn.ucai.superwechat.domain.EMUser;
 
@@ -68,7 +69,6 @@ public class UserUtils {
 		imageView.setDefaultImageResId(R.drawable.default_avatar);
 		imageView.setImageUrl(url, RequestManager.getImageLoader());
 		imageView.setErrorImageResId(R.drawable.default_avatar);
-
 	}
 
 	private static String getAvatarPath(String username) {
@@ -86,6 +86,14 @@ public class UserUtils {
 			Picasso.with(context).load(user.getAvatar()).placeholder(R.drawable.default_avatar).into(imageView);
 		} else {
 			Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
+		}
+	}
+
+	public static void setCurrentUserBeanAvatar(NetworkImageView imageView) {
+		User user = SuperWeChatApplication.getInstance().getUser();
+		Log.e("main"," setCurrentUserAvatar_user="+user);
+		if (user!=null) {
+			setUserAvatar(getAvatarPath(user.getMUserName()),imageView);
 		}
 	}
 
