@@ -67,6 +67,7 @@ import cn.ucai.superwechat.bean.Contact;
 import cn.ucai.superwechat.db.EMUserDao;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.domain.EMUser;
+import cn.ucai.superwechat.utils.UserUtils;
 import cn.ucai.superwechat.widget.Sidebar;
 
 /**
@@ -474,6 +475,9 @@ public class ContactlistFragment extends Fragment {
 		newFriends.setMUserNick(strChat);// 把"申请与通知"添加到首位
 		if(!mContactList.contains(newFriends))
 			this.mContactList.add(0,newFriends);
+		for (Contact contact:mContactList) {
+			UserUtils.setUserHearder(contact.getMContactCname(),contact);
+		}
 //            contactList.add(0, users.get(Constant.CHAT_ROOM));
 //		userlist.put(Constant.GROUP_USERNAME, groupUser);
 
@@ -496,8 +500,6 @@ public class ContactlistFragment extends Fragment {
 				return lhs.getHeader().compareTo(rhs.getMUserNick());
 			}
 		});
-
-		
 	}
 	
 	void hideSoftKeyboard() {
@@ -526,4 +528,5 @@ public class ContactlistFragment extends Fragment {
 
 		}
 	}
+
 }
