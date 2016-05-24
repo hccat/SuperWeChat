@@ -14,6 +14,7 @@
 package cn.ucai.superwechat.fragment;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,14 +49,12 @@ import com.easemob.util.EMLog;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.activity.AddContactActivity;
 import cn.ucai.superwechat.activity.ChatActivity;
 import cn.ucai.superwechat.activity.GroupsActivity;
@@ -64,6 +63,7 @@ import cn.ucai.superwechat.activity.NewFriendsMsgActivity;
 import cn.ucai.superwechat.adapter.ContactAdapter;
 import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import cn.ucai.superwechat.applib.controller.HXSDKHelper.HXSyncListener;
+import cn.ucai.superwechat.bean.Contact;
 import cn.ucai.superwechat.db.EMUserDao;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.domain.EMUser;
@@ -77,6 +77,7 @@ public class ContactlistFragment extends Fragment {
 	public static final String TAG = "ContactlistFragment";
 	private ContactAdapter adapter;
 	private List<EMUser> contactList;
+	private ArrayList<Contact> mContactList;
 	private ListView listView;
 	private boolean hidden;
 	private Sidebar sidebar;
@@ -172,7 +173,7 @@ public class ContactlistFragment extends Fragment {
         
 		//黑名单列表
 		blackList = EMContactManager.getInstance().getBlackListUsernames();
-		contactList = new ArrayList<EMUser>();
+		mContactList = new ArrayList<Contact>();
 		// 获取设置contactlist
 		getContactList();
 		
@@ -449,40 +450,53 @@ public class ContactlistFragment extends Fragment {
 	 * 获取联系人列表，并过滤掉黑名单和排序
 	 */
 	private void getContactList() {
-		contactList.clear();
+//		contactList.clear();
+		mContactList.clear();
 		//获取本地好友列表
-		Map<String, EMUser> users = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
-		Iterator<Entry<String, EMUser>> iterator = users.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<String, EMUser> entry = iterator.next();
-			if (!entry.getKey().equals(Constant.NEW_FRIENDS_USERNAME)
-			        && !entry.getKey().equals(Constant.GROUP_USERNAME)
-			        && !entry.getKey().equals(Constant.CHAT_ROOM)
-					&& !entry.getKey().equals(Constant.CHAT_ROBOT)
-					&& !blackList.contains(entry.getKey()))
-				contactList.add(entry.getValue());
-		}
+		ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
+		mContactList.addAll(contactList);
+
+
+
+//		userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
+		// 添加"群聊"
+		Contact groupUser = new Contact();
+		String strGroup = getActivity().getString(R.string.group_chat);
+		groupUser.setMContactCname(Constant.GROUP_USERNAME);
+		groupUser.setMUserNick(strGroup);
+		if(!mContactList.contains(groupUser))
+			this.mContactList.add(0,groupUser);
+
+		// 添加user"申请与通知"
+		Contact newFriends = new Contact();
+		newFriends.setMContactCname(Constant.NEW_FRIENDS_USERNAME);
+		String strChat = getActivity().getString(R.string.Application_and_notify);
+		newFriends.setMUserNick(strChat);// 把"申请与通知"添加到首位
+		if(!mContactList.contains(newFriends))
+			this.mContactList.add(0,newFriends);
+//            contactList.add(0, users.get(Constant.CHAT_ROOM));
+//		userlist.put(Constant.GROUP_USERNAME, groupUser);
+
+//		Map<String, EMUser> users = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
+//		Iterator<Entry<String, EMUser>> iterator = users.entrySet().iterator();
+//		while (iterator.hasNext()) {
+//			Entry<String, EMUser> entry = iterator.next();
+//			if (!entry.getKey().equals(Constant.NEW_FRIENDS_USERNAME)
+//			        && !entry.getKey().equals(Constant.GROUP_USERNAME)
+//			        && !entry.getKey().equals(Constant.CHAT_ROOM)
+//					&& !entry.getKey().equals(Constant.CHAT_ROBOT)
+//					&& !blackList.contains(entry.getKey()))
+//				this.contactList.add(entry.getValue());
+//		}
 		// 排序
-		Collections.sort(contactList, new Comparator<EMUser>() {
+		Collections.sort(this.mContactList, new Comparator<Contact>() {
 
 			@Override
-			public int compare(EMUser lhs, EMUser rhs) {
-				return lhs.getUsername().compareTo(rhs.getUsername());
+			public int compare(Contact lhs, Contact rhs) {
+				return lhs.getHeader().compareTo(rhs.getMUserNick());
 			}
 		});
-//
-//		if(users.get(Constant.CHAT_ROBOT)!=null){
-//			contactList.add(0, users.get(Constant.CHAT_ROBOT));
-//		}
-		// 加入"群聊"和"聊天室"
-//        if(users.get(Constant.CHAT_ROOM) != null)
-//            contactList.add(0, users.get(Constant.CHAT_ROOM));
-        if(users.get(Constant.GROUP_USERNAME) != null)
-            contactList.add(0, users.get(Constant.GROUP_USERNAME));
-        
-		// 把"申请与通知"添加到首位
-		if(users.get(Constant.NEW_FRIENDS_USERNAME) != null)
-		    contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
+
 		
 	}
 	
@@ -503,5 +517,13 @@ public class ContactlistFragment extends Fragment {
 	    	outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
 	    }
 	    
+	}
+
+	class ContactlistBroadcastReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+
+		}
 	}
 }
