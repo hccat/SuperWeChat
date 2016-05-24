@@ -13,6 +13,13 @@
  */
 package cn.ucai.superwechat.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,19 +28,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-
-import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import cn.ucai.superwechat.Constant;
-import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.adapter.ContactAdapter;
-import cn.ucai.superwechat.domain.EMUser;
+import cn.ucai.superwechat.bean.Contact;
 import cn.ucai.superwechat.widget.Sidebar;
 
 public class PickContactNoCheckboxActivity extends BaseActivity {
@@ -41,7 +40,7 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 	private ListView listView;
 	private Sidebar sidebar;
 	protected ContactAdapter contactAdapter;
-	private List<EMUser> contactList;
+	private List<Contact> contactList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 		listView = (ListView) findViewById(R.id.list);
 		sidebar = (Sidebar) findViewById(R.id.sidebar);
 		sidebar.setListView(listView);
-		contactList = new ArrayList<EMUser>();
+		contactList = new ArrayList<Contact>();
 		// 获取设置contactlist
 		getContactList();
 		// 设置adapter
@@ -69,7 +68,7 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 	protected void onListItemClick(int position) {
 //		if (position != 0) {
 			setResult(RESULT_OK, new Intent().putExtra("username", contactAdapter.getItem(position)
-					.getUsername()));
+					.getMContactCname()));
 			finish();
 //		}
 	}
@@ -80,19 +79,19 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 
 	private void getContactList() {
 		contactList.clear();
-		Map<String, EMUser> users = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
-		Iterator<Entry<String, EMUser>> iterator = users.entrySet().iterator();
+		Map<String, Contact> users = SuperWeChatApplication.getInstance().getUserList();
+		Iterator<Entry<String, Contact>> iterator = users.entrySet().iterator();
 		while (iterator.hasNext()) {
-			Entry<String, EMUser> entry = iterator.next();
+			Entry<String, Contact> entry = iterator.next();
 			if (!entry.getKey().equals(Constant.NEW_FRIENDS_USERNAME) && !entry.getKey().equals(Constant.GROUP_USERNAME) && !entry.getKey().equals(Constant.CHAT_ROOM) && !entry.getKey().equals(Constant.CHAT_ROBOT))
 				contactList.add(entry.getValue());
 		}
 		// 排序
-		Collections.sort(contactList, new Comparator<EMUser>() {
+		Collections.sort(contactList, new Comparator<Contact>() {
 
 			@Override
-			public int compare(EMUser lhs, EMUser rhs) {
-				return lhs.getUsername().compareTo(rhs.getUsername());
+			public int compare(Contact lhs, Contact rhs) {
+				return lhs.getHeader().compareTo(rhs.getHeader());
 			}
 		});
 	}

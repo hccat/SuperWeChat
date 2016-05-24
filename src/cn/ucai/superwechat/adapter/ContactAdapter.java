@@ -60,7 +60,11 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		copyUserList.addAll(objects);
 		layoutInflater = LayoutInflater.from(context);
 	}
-	
+
+	public void remove(Contact tobeDeleteUser) {
+		userList.remove(tobeDeleteUser);
+	}
+
 	private static class ViewHolder {
 		NetworkImageView avatar;
 	    TextView unreadMsgView;
@@ -134,7 +138,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 	
 	@Override
 	public Contact getItem(int position) {
-		return getItem(position);
+		return userList.get(position);
 	}
 
 	@Override
