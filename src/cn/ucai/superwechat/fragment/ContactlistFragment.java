@@ -78,7 +78,7 @@ import cn.ucai.superwechat.widget.Sidebar;
 public class ContactlistFragment extends Fragment {
 	public static final String TAG = "ContactlistFragment";
 	private ContactAdapter adapter;
-	private List<EMUser> contactList;
+//	private List<EMUser> contactList;
 	private ArrayList<Contact> mContactList;
 	private ListView listView;
 	private boolean hidden;
@@ -210,7 +210,7 @@ public class ContactlistFragment extends Fragment {
 		});
 		
 		// 设置adapter
-		adapter = new ContactAdapter(getActivity(), R.layout.row_contact, contactList);
+		adapter = new ContactAdapter(getActivity(), R.layout.row_contact, mContactList);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
