@@ -176,6 +176,7 @@ public class LoginActivity extends BaseActivity {
 						if (!progressShow) {
 							return;
 						}
+
 						loginAppSever();
 						// 登陆成功，保存用户名密码
 						SuperWeChatApplication.getInstance().setUserName(currentUsername);
@@ -267,8 +268,8 @@ public class LoginActivity extends BaseActivity {
 
 	private void saveUser(User user) {
 		SuperWeChatApplication instance = SuperWeChatApplication.getInstance();
-		Log.e("mian","login user="+user);
 		instance.setUser(user);
+		Log.e("mian","login user="+user);
 		instance.setUserName(currentUsername);
 		instance.setPassword(currentPassword);
 		SuperWeChatApplication.currentUserNick = user.getMUserNick();
