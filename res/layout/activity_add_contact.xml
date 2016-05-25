@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:text="账号不存在"
         android:layout_gravity="center_horizontal"
-        android:textColor="000"
+        android:textColor="#000"
         android:textSize="20sp"
         android:visibility="gone"/>
 
