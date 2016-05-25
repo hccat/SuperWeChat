@@ -590,10 +590,28 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 		public void onContactDeleted(final List<String> usernameList) {
 			// 被删除
 			Map<String, EMUser> localUsers = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
+			HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
+			ArrayList<String> toDeleteUserNames = new ArrayList<String>();
 			for (String username : usernameList) {
 				localUsers.remove(username);
 				userDao.deleteContact(username);
 				inviteMessgeDao.deleteMessage(username);
+				if (userList.containsKey(username)) {
+					toDeleteUserNames.add(username);
+				}
+			}
+			if (toDeleteUserNames.size()>0) {
+				for (String name : toDeleteUserNames) {
+					try {
+						String path = new ApiParams()
+                                .with(I.Contact.USER_NAME,SuperWeChatApplication.getInstance().getUserName())
+                                .with(I.Contact.CU_NAME,name)
+                                .getRequestUrl(I.REQUEST_DELETE_CONTACT);
+						executeRequest(new GsonRequest<Boolean>(path,Boolean.class,responseDeleteContactListener(name),errorListener()));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			runOnUiThread(new Runnable() {
 				public void run() {
@@ -612,6 +630,24 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 				}
 			});
 
+		}
+
+		private Response.Listener<Boolean> responseDeleteContactListener(final String name) {
+			return new Response.Listener<Boolean>() {
+				@Override
+				public void onResponse(Boolean response) {
+					if (response) {
+						HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
+						if (userList.containsKey(name)) {
+							ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
+							Contact contact = userList.get(name);
+							contactList.remove(contact);
+							userList.remove(name);
+							mContext.sendStickyBroadcast(new Intent("update_contact_list"));
+						}
+					}
+				}
+			};
 		}
 
 		@Override
