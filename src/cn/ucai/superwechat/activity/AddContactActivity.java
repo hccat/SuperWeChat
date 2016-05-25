@@ -80,15 +80,14 @@ public class AddContactActivity extends BaseActivity{
 		searchedUserLayout.setVisibility(View.GONE);
 		nofindTextView.setVisibility(View.GONE);
 
-		final String name = editText.getText().toString();
-		String saveText = searchBtn.getText().toString();
+		final String name = editText.getText().toString().trim();
 
 		if(TextUtils.isEmpty(name)) {
 			String st = getResources().getString(R.string.Please_enter_a_username);
 			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", st));
 			return;
 		}
-		if(SuperWeChatApplication.getInstance().getUserName().equals(name.trim())){
+		if(SuperWeChatApplication.getInstance().getUserName().equals(name)){
 			String str = getString(R.string.not_add_myself);
 			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", str));
 			return;

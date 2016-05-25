@@ -122,8 +122,8 @@ public class UserUtils {
 		if (contact != null) {
 			if (contact.getMUserNick() != null) {
 				textView.setText(contact.getMUserNick());
-			} else if (contact.getMContactCname() != null) {
-				textView.setText(contact.getMContactCname());
+			} else if (contact.getMUserName() != null) {
+				textView.setText(contact.getMUserName());
 			}
 		} else {
 			textView.setText(username);
@@ -149,6 +149,12 @@ public class UserUtils {
     		textView.setText(user.getNick());
     	}
     }
+	public static void setCurrentUserBeanNick(TextView textView){
+		User user = SuperWeChatApplication.getInstance().getUser();
+		if(user!=null&&user.getMUserNick()!=null&&textView != null){
+			textView.setText(user.getMUserNick());
+		}
+	}
     
     /**
      * 保存或更新某个用户
