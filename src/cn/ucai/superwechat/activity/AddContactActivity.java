@@ -29,11 +29,14 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.NetworkImageView;
 import com.easemob.chat.EMContactManager;
 
+import java.util.HashMap;
+
 import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.applib.controller.HXSDKHelper;
+import cn.ucai.superwechat.bean.Contact;
 import cn.ucai.superwechat.bean.User;
 import cn.ucai.superwechat.data.ApiParams;
 import cn.ucai.superwechat.data.GsonRequest;
@@ -76,6 +79,7 @@ public class AddContactActivity extends BaseActivity{
 	public void searchContact(View v) {
 		searchedUserLayout.setVisibility(View.GONE);
 		nofindTextView.setVisibility(View.GONE);
+
 		final String name = editText.getText().toString();
 		String saveText = searchBtn.getText().toString();
 
@@ -84,7 +88,7 @@ public class AddContactActivity extends BaseActivity{
 			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", st));
 			return;
 		}
-		if(SuperWeChatApplication.getInstance().getUserName().equals(editText.getText().toString())){
+		if(SuperWeChatApplication.getInstance().getUserName().equals(name.trim())){
 			String str = getString(R.string.not_add_myself);
 			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", str));
 			return;
@@ -112,14 +116,18 @@ public class AddContactActivity extends BaseActivity{
 		return new Response.Listener<User>() {
 			@Override
 			public void onResponse(User user) {
-				if (user == null) {
-					nofindTextView.setVisibility(View.VISIBLE);
-
+				if (user!=null) {
+					HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
+					if (userList.containsKey(user.getMUserName())) {
+						startActivity(new Intent(AddContactActivity.this,UserProfileActivity.class)
+								.putExtra("username",user.getMUserName()));
+					} else {
+						searchedUserLayout.setVisibility(View.VISIBLE);
+						UserUtils.setUserBeanAvatar(user,avatar);
+						UserUtils.setUserBeanNick(user,nameText);
+					}
 				} else {
-					searchedUserLayout.setVisibility(View.VISIBLE);
-					nameText.setText(toAddUsername);
-					UserUtils.setUserBeanAvatar(user.getMUserName(),avatar);
-					UserUtils.setUserBeanNick(user.getMUserName(),nameText);
+				nofindTextView.setVisibility(View.VISIBLE);
 				}
 			}
 		};
