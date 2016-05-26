@@ -109,6 +109,9 @@ public class LoginActivity extends BaseActivity {
         mContext = this;
         initView();
         setListener();
+        if (SuperWeChatApplication.getInstance().getUserName() != null) {
+            usernameEditText.setText(SuperWeChatApplication.getInstance().getUserName());
+        }
     }
 
     private void setListener() {
@@ -129,9 +132,7 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
-        if (SuperWeChatApplication.getInstance().getUserName() != null) {
-            usernameEditText.setText(SuperWeChatApplication.getInstance().getUserName());
-        }
+
 
         mbtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
