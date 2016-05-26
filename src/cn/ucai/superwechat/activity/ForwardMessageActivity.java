@@ -16,7 +16,6 @@ package cn.ucai.superwechat.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.bean.Contact;
 
 public class ForwardMessageActivity extends PickContactNoCheckboxActivity {
@@ -40,7 +39,7 @@ public class ForwardMessageActivity extends PickContactNoCheckboxActivity {
 			Intent intent = new Intent(ForwardMessageActivity.this, AlertDialog.class);
 			intent.putExtra("cancel", true);
 			intent.putExtra("titleIsCancel", true);
-			intent.putExtra("msg", getString(R.string.confirm_forward_to, selectUser.getMContactCname()));
+			intent.putExtra("msg", getString(cn.ucai.superwechat.R.string.confirm_forward_to, selectUser.getMContactCname()));
 			startActivityForResult(intent, 1);
 //		}
 	}

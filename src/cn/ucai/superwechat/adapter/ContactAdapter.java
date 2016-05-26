@@ -32,8 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ucai.superwechat.Constant;
+import cn.ucai.superwechat.DemoHXSDKHelper;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import cn.ucai.superwechat.bean.Contact;
+import cn.ucai.superwechat.data.RequestManager;
 import cn.ucai.superwechat.utils.UserUtils;
 
 /**
@@ -52,6 +55,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 	private MyFilter myFilter;
     private boolean notiyfyByFilter;
 	Context mContext;
+
 	public ContactAdapter(Context context, int resource, List<Contact> objects) {
 		mContext = context;
 		this.res = resource;
@@ -106,7 +110,10 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		if(username.equals(Constant.NEW_FRIENDS_USERNAME)){
 		    holder.nameTextview.setText(user.getMUserNick());
 		    holder.avatar.setDefaultImageResId(R.drawable.new_friends_icon);
-			if(user.getMUserUnreadMsgCount() > 0){
+			holder.avatar.setImageUrl("", RequestManager.getImageLoader());
+			int unreadAddressCountTotal = ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getContactList().get(Constant.NEW_FRIENDS_USERNAME)
+					.getUnreadMsgCount();
+			if(user.getMUserUnreadMsgCount() > 0 || unreadAddressCountTotal>0 ){
 			    holder.unreadMsgView.setVisibility(View.VISIBLE);
 //			    holder.unreadMsgView.setText(user.getUnreadMsgCount()+"");
 			}else{
@@ -116,6 +123,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 			//群聊item
 		    holder.nameTextview.setText(user.getMUserNick());
 		    holder.avatar.setDefaultImageResId(R.drawable.groups_icon);
+			holder.avatar.setImageUrl("", RequestManager.getImageLoader());
 		}else if(username.equals(Constant.CHAT_ROOM)){
             //群聊item
             holder.nameTextview.setText(user.getMUserNick());
@@ -123,12 +131,13 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		}else if(username.equals(Constant.CHAT_ROBOT)){
 			//Robot item
 			holder.nameTextview.setText(user.getMUserNick());
-			holder.avatar.setImageResource(R.drawable.groups_icon);
+			holder.avatar.setDefaultImageResId(R.drawable.groups_icon);
 		}else{
 //		    holder.nameTextview.setText(user.getNick());
-			UserUtils.setUserBeanNick(username,holder.nameTextview);
 		    //设置用户头像
-			UserUtils.setUserBeanAvatar(username, holder.avatar);
+//			UserUtils.setUserAvatar(getContext(), username, holder.avatar);
+			UserUtils.setUserBeanAvatar(username,holder.avatar);
+			UserUtils.setUserBeanNick(username,holder.nameTextview);
 			if(holder.unreadMsgView != null)
 			    holder.unreadMsgView.setVisibility(View.INVISIBLE);
 		}
@@ -182,6 +191,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		}
 		return list.toArray(new String[list.size()]);
 	}
+	
 
 	public Filter getFilter() {
 		if(myFilter==null){

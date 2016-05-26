@@ -60,6 +60,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			holder.avator = (NetworkImageView) convertView.findViewById(R.id.avatar);
 			holder.reason = (TextView) convertView.findViewById(R.id.message);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
+			Log.i("main", "name:" + holder.name.toString());
 			holder.status = (Button) convertView.findViewById(R.id.user_state);
 			holder.groupContainer = (LinearLayout) convertView.findViewById(R.id.ll_group);
 			holder.groupname = (TextView) convertView.findViewById(R.id.tv_groupName);
@@ -87,6 +88,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			
 			holder.reason.setText(msg.getReason());
 			holder.name.setText(msg.getFrom());
+			Log.i("main", "msg.getFrom() :" + msg.getFrom().toString());
 			// holder.time.setText(DateUtils.getTimestampString(new
 			// Date(msg.getTime())));
 			if (msg.getStatus() == InviteMesageStatus.BEAGREED) {
@@ -126,20 +128,22 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 				holder.status.setEnabled(false);
 			}
 
+
 		}
-		// 设置用户头像
+
 		UserUtils.setUserBeanAvatar(msg.getFrom(),holder.avator);
-		UserUtils.setUserNick(msg.getFrom(),holder.name);
-		Log.i("main","msg.getFrom():"+msg.getFrom());
+		UserUtils.setUserBeanNick(msg.getFrom(),holder.name);
+
 
 		return convertView;
+
+
 	}
 
 	/**
 	 * 同意好友请求或者群申请
 	 * 
 	 * @param button
-	 * @param
 	 */
 	private void acceptInvitation(final Button button, final InviteMessage msg) {
 		final ProgressDialog pd = new ProgressDialog(context);

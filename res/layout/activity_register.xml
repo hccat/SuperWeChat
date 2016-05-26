@@ -8,19 +8,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="0dip"
+        android:layout_weight="0.3" >
 
         <TextView
+            android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawableLeft="@drawable/mobile"
+            android:textSize="20dp"
             android:text="超级微信"
             android:gravity="center"
-            android:drawableLeft="@drawable/mobile"
-            android:textSize="25sp"
-            android:textColor="#000"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true" />
+            android:textColor="#000"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -62,9 +62,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="54dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
             android:background="#fff" >
 
             <ImageView
@@ -83,12 +83,11 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_nick"
                 android:background="@null"
-                android:hint="@string/nickname"
+                android:hint="昵称"
                 android:paddingLeft="10dip"
                 android:singleLine="true"
                 android:textSize="18sp" />
         </RelativeLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -122,6 +121,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginLeft="20dp"
@@ -169,21 +169,19 @@
                 android:layout_marginRight="10dip"
                 android:src="@drawable/default_avatar" />
 
-            <TextView
+            <EditText
                 android:id="@+id/avatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_avatar"
                 android:background="@null"
-                android:text="头像"
-
-                android:gravity="center_vertical"
+                android:hint="头像"
+                android:inputType="textPassword"
                 android:paddingLeft="10dip"
                 android:singleLine="true"
                 android:textSize="18sp" />
         </RelativeLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -192,25 +190,25 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal" >
+
             <Button
-                android:id="@+id/btn_login"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnlogin"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/button_bg"
-                android:onClick="login"
+                android:background="#fff"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"
                 android:text="@string/login"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:layout_weight="1"/>
-
+                android:textColor="#000"
+                android:textSize="20sp" />
             <Button
-                android:id="@+id/btn_register"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnregister"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -220,8 +218,7 @@
                 android:paddingTop="7dp"
                 android:text="@string/register"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:layout_weight="3"/>
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 

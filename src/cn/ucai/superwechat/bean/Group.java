@@ -9,10 +9,23 @@ public class Group extends Location implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private Integer mgroupId;
+	private String mgroupHxid;
+	private String mgroupName;
+	private String mgroupDescription;
+	private String mgroupOwner;
+	private String mgroupLastModifiedTime;
+	private Integer mgroupMaxUsers;
+	private Integer mgroupAffiliationsCount;
+	private Boolean mgroupIsPublic;
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (!(o instanceof Group)) return false;
 
 		Group group = (Group) o;
 
@@ -25,19 +38,6 @@ public class Group extends Location implements java.io.Serializable {
 		return mgroupId.hashCode();
 	}
 
-	/**
-	 *
-
-	 */
-	private Integer mgroupId;
-	private String mgroupHxid;
-	private String mgroupName;
-	private String mgroupDescription;
-	private String mgroupOwner;
-	private String mgroupLastModifiedTime;
-	private Integer mgroupMaxUsers;
-	private Integer mgroupAffiliationsCount;
-	private Boolean mgroupIsPublic;
 	private Boolean mgroupAllowInvites;
 
 	// Constructors

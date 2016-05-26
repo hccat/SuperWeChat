@@ -13,9 +13,6 @@
  */
 package cn.ucai.superwechat.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -38,12 +35,14 @@ import android.widget.Toast;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatRoom;
-
-import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.utils.UserUtils;
-import cn.ucai.superwechat.widget.ExpandGridView;
 import com.easemob.util.EMLog;
 import com.easemob.util.NetUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.ucai.superwechat.utils.UserUtils;
+import cn.ucai.superwechat.widget.ExpandGridView;
 
 public class ChatRoomDetailsActivity extends BaseActivity implements OnClickListener {
 	private static final String TAG = "ChatRoomDetailsActivity";
@@ -81,25 +80,25 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_group_details);
+		setContentView(cn.ucai.superwechat.R.layout.activity_group_details);
 		instance = this;
-		st = getResources().getString(R.string.people);
-		clearAllHistory = (RelativeLayout) findViewById(R.id.clear_all_history);
+		st = getResources().getString(cn.ucai.superwechat.R.string.people);
+		clearAllHistory = (RelativeLayout) findViewById(cn.ucai.superwechat.R.id.clear_all_history);
 		clearAllHistory.setVisibility(View.GONE);
-		userGridview = (ExpandGridView) findViewById(R.id.gridview);
-		loadingPB = (ProgressBar) findViewById(R.id.progressBar);
-		exitBtn = (Button) findViewById(R.id.btn_exit_grp);
-		deleteBtn = (Button) findViewById(R.id.btn_exitdel_grp);
-		blacklistLayout = (RelativeLayout) findViewById(R.id.rl_blacklist);
-		changeGroupNameLayout = (RelativeLayout) findViewById(R.id.rl_change_group_name);
+		userGridview = (ExpandGridView) findViewById(cn.ucai.superwechat.R.id.gridview);
+		loadingPB = (ProgressBar) findViewById(cn.ucai.superwechat.R.id.progressBar);
+		exitBtn = (Button) findViewById(cn.ucai.superwechat.R.id.btn_exit_grp);
+		deleteBtn = (Button) findViewById(cn.ucai.superwechat.R.id.btn_exitdel_grp);
+		blacklistLayout = (RelativeLayout) findViewById(cn.ucai.superwechat.R.id.rl_blacklist);
+		changeGroupNameLayout = (RelativeLayout) findViewById(cn.ucai.superwechat.R.id.rl_change_group_name);
 
-		blockGroupMsgLayout = (RelativeLayout)findViewById(R.id.rl_switch_block_groupmsg);
-		showChatRoomIdLayout = (RelativeLayout)findViewById(R.id.rl_group_id);
-		showChatRoomNickLayout = (RelativeLayout)findViewById(R.id.rl_group_nick);
-		chatRoomIdTextView = (TextView)findViewById(R.id.tv_group_id);
-		chatRoomNickTextView = (TextView)findViewById(R.id.tv_group_nick_value);
+		blockGroupMsgLayout = (RelativeLayout)findViewById(cn.ucai.superwechat.R.id.rl_switch_block_groupmsg);
+		showChatRoomIdLayout = (RelativeLayout)findViewById(cn.ucai.superwechat.R.id.rl_group_id);
+		showChatRoomNickLayout = (RelativeLayout)findViewById(cn.ucai.superwechat.R.id.rl_group_nick);
+		chatRoomIdTextView = (TextView)findViewById(cn.ucai.superwechat.R.id.tv_group_id);
+		chatRoomNickTextView = (TextView)findViewById(cn.ucai.superwechat.R.id.tv_group_nick_value);
 
-		Drawable referenceDrawable = getResources().getDrawable(R.drawable.smiley_add_btn);
+		Drawable referenceDrawable = getResources().getDrawable(cn.ucai.superwechat.R.drawable.smiley_add_btn);
 		referenceWidth = referenceDrawable.getIntrinsicWidth();
 		referenceHeight = referenceDrawable.getIntrinsicHeight();
 
@@ -125,11 +124,11 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 			deleteBtn.setVisibility(View.GONE);
 		}
 		
-		((TextView) findViewById(R.id.group_name)).setText(room.getName());
+		((TextView) findViewById(cn.ucai.superwechat.R.id.group_name)).setText(room.getName());
 		List<String> owner = new ArrayList<String>();
 		owner.add(room.getOwner());
 		
-		adapter = new GridAdapter(this, R.layout.grid, owner);
+		adapter = new GridAdapter(this, cn.ucai.superwechat.R.layout.grid, owner);
 		userGridview.setAdapter(adapter);
 		
 		updateRoom();
@@ -164,17 +163,17 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		String st1 = getResources().getString(R.string.being_added);
-		String st2 = getResources().getString(R.string.is_quit_the_group_chat);
-		String st3 = getResources().getString(R.string.chatting_is_dissolution);
-		String st4 = getResources().getString(R.string.are_empty_group_of_news);
-		String st5 = getResources().getString(R.string.is_modify_the_group_name);
-		final String st6 = getResources().getString(R.string.Modify_the_group_name_successful);
-		final String st7 = getResources().getString(R.string.change_the_group_name_failed_please);
-		String st8 = getResources().getString(R.string.Are_moving_to_blacklist);
-		final String st9 = getResources().getString(R.string.failed_to_move_into);
+		String st1 = getResources().getString(cn.ucai.superwechat.R.string.being_added);
+		String st2 = getResources().getString(cn.ucai.superwechat.R.string.is_quit_the_group_chat);
+		String st3 = getResources().getString(cn.ucai.superwechat.R.string.chatting_is_dissolution);
+		String st4 = getResources().getString(cn.ucai.superwechat.R.string.are_empty_group_of_news);
+		String st5 = getResources().getString(cn.ucai.superwechat.R.string.is_modify_the_group_name);
+		final String st6 = getResources().getString(cn.ucai.superwechat.R.string.Modify_the_group_name_successful);
+		final String st7 = getResources().getString(cn.ucai.superwechat.R.string.change_the_group_name_failed_please);
+		String st8 = getResources().getString(cn.ucai.superwechat.R.string.Are_moving_to_blacklist);
+		final String st9 = getResources().getString(cn.ucai.superwechat.R.string.failed_to_move_into);
 		
-		final String stsuccess = getResources().getString(R.string.Move_into_blacklist_success);
+		final String stsuccess = getResources().getString(cn.ucai.superwechat.R.string.Move_into_blacklist_success);
 		if (resultCode == RESULT_OK) {
 			if (progressDialog == null) {
 				progressDialog = new ProgressDialog(ChatRoomDetailsActivity.this);
@@ -216,7 +215,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 	 * @param view
 	 */
 	public void exitDeleteGroup(View view) {
-		startActivityForResult(new Intent(this, ExitGroupDialog.class).putExtra("deleteToast", getString(R.string.dissolution_group_hint)),
+		startActivityForResult(new Intent(this, ExitGroupDialog.class).putExtra("deleteToast", getString(cn.ucai.superwechat.R.string.dissolution_group_hint)),
 				REQUEST_CODE_EXIT_DELETE);
 
 	}
@@ -268,7 +267,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 
 					runOnUiThread(new Runnable() {
 						public void run() {
-							((TextView) findViewById(R.id.group_name)).setText(returnRoom.getName());
+							((TextView) findViewById(cn.ucai.superwechat.R.id.group_name)).setText(returnRoom.getName());
 							loadingPB.setVisibility(View.INVISIBLE);
 							adapter.notifyDataSetChanged();
 							if (EMChatManager.getInstance().getCurrentUser().equals(returnRoom.getOwner())) {
@@ -299,8 +298,8 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.clear_all_history: // 清空聊天记录
-			String st9 = getResources().getString(R.string.sure_to_empty_this);
+		case cn.ucai.superwechat.R.id.clear_all_history: // 清空聊天记录
+			String st9 = getResources().getString(cn.ucai.superwechat.R.string.sure_to_empty_this);
 			Intent intent = new Intent(ChatRoomDetailsActivity.this, AlertDialog.class);
 			intent.putExtra("cancel", true);
 			intent.putExtra("titleIsCancel", true);
@@ -339,19 +338,19 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 			if (convertView == null) {
 			    holder = new ViewHolder();
 				convertView = LayoutInflater.from(getContext()).inflate(res, null);
-				holder.imageView = (ImageView) convertView.findViewById(R.id.iv_avatar);
-				holder.textView = (TextView) convertView.findViewById(R.id.tv_name);
-				holder.badgeDeleteView = (ImageView) convertView.findViewById(R.id.badge_delete);
+				holder.imageView = (ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_avatar);
+				holder.textView = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.tv_name);
+				holder.badgeDeleteView = (ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.badge_delete);
 				convertView.setTag(holder);
 			}else{
 			    holder = (ViewHolder) convertView.getTag();
 			}
-			final LinearLayout button = (LinearLayout) convertView.findViewById(R.id.button_avatar);
+			final LinearLayout button = (LinearLayout) convertView.findViewById(cn.ucai.superwechat.R.id.button_avatar);
 			// 最后一个item，减人按钮
 			if (position == getCount() - 1) {
 			    holder.textView.setText("");
 				// 设置成删除按钮
-			    holder.imageView.setImageResource(R.drawable.smiley_minus_btn);
+			    holder.imageView.setImageResource(cn.ucai.superwechat.R.drawable.smiley_minus_btn);
 //				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_minus_btn, 0, 0);
 				// 如果不是创建者或者没有相应权限，不提供加减人按钮
 				if (!room.getOwner().equals(EMChatManager.getInstance().getCurrentUser())) {
@@ -364,9 +363,9 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 					} else {
 						// 正常模式
 						convertView.setVisibility(View.VISIBLE);
-						convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
+						convertView.findViewById(cn.ucai.superwechat.R.id.badge_delete).setVisibility(View.INVISIBLE);
 					}
-					final String st10 = getResources().getString(R.string.The_delete_button_is_clicked);
+					final String st10 = getResources().getString(cn.ucai.superwechat.R.string.The_delete_button_is_clicked);
 					button.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -378,7 +377,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 				}
 			} else if (position == getCount() - 2) { // 添加群组成员按钮
 			    holder.textView.setText("");
-			    holder.imageView.setImageResource(R.drawable.smiley_add_btn);
+			    holder.imageView.setImageResource(cn.ucai.superwechat.R.drawable.smiley_add_btn);
 //				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_add_btn, 0, 0);
 				// 如果不是创建者或者没有相应权限
 				if (!room.getOwner().equals(EMChatManager.getInstance().getCurrentUser())) {
@@ -390,9 +389,9 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 						convertView.setVisibility(View.INVISIBLE);
 					} else {
 						convertView.setVisibility(View.VISIBLE);
-						convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
+						convertView.findViewById(cn.ucai.superwechat.R.id.badge_delete).setVisibility(View.INVISIBLE);
 					}
-					final String st11 = getResources().getString(R.string.Add_a_button_was_clicked);
+					final String st11 = getResources().getString(cn.ucai.superwechat.R.string.Add_a_button_was_clicked);
 					button.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -416,14 +415,14 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 				// demo群组成员的头像都用默认头像，需由开发者自己去设置头像
 				if (isInDeleteMode) {
 					// 如果是删除模式下，显示减人图标
-					convertView.findViewById(R.id.badge_delete).setVisibility(View.VISIBLE);
+					convertView.findViewById(cn.ucai.superwechat.R.id.badge_delete).setVisibility(View.VISIBLE);
 				} else {
-					convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
+					convertView.findViewById(cn.ucai.superwechat.R.id.badge_delete).setVisibility(View.INVISIBLE);
 				}
-				final String st12 = getResources().getString(R.string.not_delete_myself);
-				final String st13 = getResources().getString(R.string.Are_removed);
-				final String st14 = getResources().getString(R.string.Delete_failed);
-				final String st15 = getResources().getString(R.string.confirm_the_members);
+				final String st12 = getResources().getString(cn.ucai.superwechat.R.string.not_delete_myself);
+				final String st13 = getResources().getString(cn.ucai.superwechat.R.string.Are_removed);
+				final String st14 = getResources().getString(cn.ucai.superwechat.R.string.Delete_failed);
+				final String st15 = getResources().getString(cn.ucai.superwechat.R.string.confirm_the_members);
 				button.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -434,7 +433,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 								return;
 							}
 							if (!NetUtils.hasNetwork(getApplicationContext())) {
-								Toast.makeText(getApplicationContext(), getString(R.string.network_unavailable), 0).show();
+								Toast.makeText(getApplicationContext(), getString(cn.ucai.superwechat.R.string.network_unavailable), 0).show();
 								return;
 							}
 							EMLog.d("room", "remove user from room:" + username);

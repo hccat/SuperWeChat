@@ -1,9 +1,5 @@
 package cn.ucai.superwechat.activity;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.ProgressBar;
@@ -12,8 +8,11 @@ import android.widget.Toast;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.FileMessageBody;
-import cn.ucai.superwechat.R;
 import com.easemob.util.FileUtils;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShowNormalFileActivity extends BaseActivity {
 	private ProgressBar progressBar;
@@ -22,8 +21,8 @@ public class ShowNormalFileActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_show_file);
-		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		setContentView(cn.ucai.superwechat.R.layout.activity_show_file);
+		progressBar = (ProgressBar) findViewById(cn.ucai.superwechat.R.id.progressBar);
 
 		final FileMessageBody messageBody = getIntent().getParcelableExtra("msgbody");
 		file = new File(messageBody.getLocalUrl());
@@ -62,7 +61,7 @@ public class ShowNormalFileActivity extends BaseActivity {
                             public void run() {
                                 if(file != null && file.exists()&&file.isFile())
                                     file.delete();
-                                String str4 = getResources().getString(R.string.Failed_to_download_file);
+                                String str4 = getResources().getString(cn.ucai.superwechat.R.string.Failed_to_download_file);
                                 Toast.makeText(ShowNormalFileActivity.this, str4+msg, Toast.LENGTH_SHORT).show();
                                 finish();
                             }

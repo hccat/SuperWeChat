@@ -71,14 +71,14 @@ public class Utils {
 		return Build.VERSION.SDK_INT >= 19;
 	}
 
-	public static List<Camera.Size> getResolutionList(Camera camera)
+	public static List<Size> getResolutionList(Camera camera)
 	{ 
 		Parameters parameters = camera.getParameters();
-		List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
+		List<Size> previewSizes = parameters.getSupportedPreviewSizes();
 		return previewSizes;
 	}
 	
-	public static class ResolutionComparator implements Comparator<Camera.Size>{
+	public static class ResolutionComparator implements Comparator<Size>{
 
 		@Override
 		public int compare(Size lhs, Size rhs) {

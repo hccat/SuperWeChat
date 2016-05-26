@@ -245,31 +245,31 @@ public class MessageAdapter extends BaseAdapter{
 		if (message == null) {
 			return -1;
 		}
-		if (message.getType() == EMMessage.Type.TXT) {
+		if (message.getType() == Type.TXT) {
 			if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false))
-			    return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE_CALL : MESSAGE_TYPE_SENT_VOICE_CALL;
+			    return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE_CALL : MESSAGE_TYPE_SENT_VOICE_CALL;
 			else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
-			    return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
+			    return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
 			else if(((DemoHXSDKHelper) HXSDKHelper.getInstance()).isRobotMenuMessage(message))
-				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_ROBOT_MENU : MESSAGE_TYPE_SENT_ROBOT_MENU;
+				return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_ROBOT_MENU : MESSAGE_TYPE_SENT_ROBOT_MENU;
 			else
-				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
+				return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
 		}
-		if (message.getType() == EMMessage.Type.IMAGE) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_IMAGE : MESSAGE_TYPE_SENT_IMAGE;
+		if (message.getType() == Type.IMAGE) {
+			return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_IMAGE : MESSAGE_TYPE_SENT_IMAGE;
 
 		}
-		if (message.getType() == EMMessage.Type.LOCATION) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_LOCATION : MESSAGE_TYPE_SENT_LOCATION;
+		if (message.getType() == Type.LOCATION) {
+			return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_LOCATION : MESSAGE_TYPE_SENT_LOCATION;
 		}
-		if (message.getType() == EMMessage.Type.VOICE) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE : MESSAGE_TYPE_SENT_VOICE;
+		if (message.getType() == Type.VOICE) {
+			return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE : MESSAGE_TYPE_SENT_VOICE;
 		}
-		if (message.getType() == EMMessage.Type.VIDEO) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO : MESSAGE_TYPE_SENT_VIDEO;
+		if (message.getType() == Type.VIDEO) {
+			return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO : MESSAGE_TYPE_SENT_VIDEO;
 		}
-		if (message.getType() == EMMessage.Type.FILE) {
-			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_FILE : MESSAGE_TYPE_SENT_FILE;
+		if (message.getType() == Type.FILE) {
+			return message.direct == Direct.RECEIVE ? MESSAGE_TYPE_RECV_FILE : MESSAGE_TYPE_SENT_FILE;
 		}
 
 		return -1;// invalid
@@ -279,36 +279,36 @@ public class MessageAdapter extends BaseAdapter{
 	private View createViewByMessage(EMMessage message, int position) {
 		switch (message.getType()) {
 		case LOCATION:
-			return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_location, null) : inflater.inflate(
+			return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_location, null) : inflater.inflate(
 					cn.ucai.superwechat.R.layout.row_sent_location, null);
 		case IMAGE:
-			return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_picture, null) : inflater.inflate(
+			return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_picture, null) : inflater.inflate(
 					cn.ucai.superwechat.R.layout.row_sent_picture, null);
 
 		case VOICE:
-			return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_voice, null) : inflater.inflate(
+			return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_voice, null) : inflater.inflate(
 					cn.ucai.superwechat.R.layout.row_sent_voice, null);
 		case VIDEO:
-			return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_video, null) : inflater.inflate(
+			return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_video, null) : inflater.inflate(
 					cn.ucai.superwechat.R.layout.row_sent_video, null);
 		case FILE:
-			return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_file, null) : inflater.inflate(
+			return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_file, null) : inflater.inflate(
 					cn.ucai.superwechat.R.layout.row_sent_file, null);
 		default:
 			// 语音通话
 			if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false))
-				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_voice_call, null) : inflater
+				return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_voice_call, null) : inflater
 						.inflate(cn.ucai.superwechat.R.layout.row_sent_voice_call, null);
 			// 视频通话
 			else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false))
-				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_video_call,
+				return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_video_call,
 						null) : inflater.inflate(cn.ucai.superwechat.R.layout.row_sent_video_call, null);
 			// 含有菜单的消息	
 			else if (((DemoHXSDKHelper)HXSDKHelper.getInstance()).isRobotMenuMessage(message))
-				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_menu, null)
+				return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_menu, null)
 						: inflater.inflate(cn.ucai.superwechat.R.layout.row_sent_message, null);
 			else
-				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_message,
+				return message.direct == Direct.RECEIVE ? inflater.inflate(cn.ucai.superwechat.R.layout.row_received_message,
 						null) : inflater.inflate(cn.ucai.superwechat.R.layout.row_sent_message, null);
 		}
 	}
@@ -321,7 +321,7 @@ public class MessageAdapter extends BaseAdapter{
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = createViewByMessage(message, position);
-			if (message.getType() == EMMessage.Type.IMAGE) {
+			if (message.getType() == Type.IMAGE) {
 				try {
 					holder.iv = ((ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_sendPicture));
 					holder.iv_avatar = (NetworkImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_userhead);
@@ -332,7 +332,7 @@ public class MessageAdapter extends BaseAdapter{
 				} catch (Exception e) {
 				}
 
-			} else if (message.getType() == EMMessage.Type.TXT) {
+			} else if (message.getType() == Type.TXT) {
 
 				try {
 					holder.pb = (ProgressBar) convertView.findViewById(cn.ucai.superwechat.R.id.pb_sending);
@@ -354,7 +354,7 @@ public class MessageAdapter extends BaseAdapter{
 					holder.tv = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.tv_chatcontent);
 				}
 
-			} else if (message.getType() == EMMessage.Type.VOICE) {
+			} else if (message.getType() == Type.VOICE) {
 				try {
 					holder.iv = ((ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_voice));
 					holder.iv_avatar = (NetworkImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_userhead);
@@ -365,7 +365,7 @@ public class MessageAdapter extends BaseAdapter{
 					holder.iv_read_status = (ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_unread_voice);
 				} catch (Exception e) {
 				}
-			} else if (message.getType() == EMMessage.Type.LOCATION) {
+			} else if (message.getType() == Type.LOCATION) {
 				try {
 					holder.iv_avatar = (NetworkImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_userhead);
 					holder.tv = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.tv_location);
@@ -374,7 +374,7 @@ public class MessageAdapter extends BaseAdapter{
 					holder.tv_usernick = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.tv_userid);
 				} catch (Exception e) {
 				}
-			} else if (message.getType() == EMMessage.Type.VIDEO) {
+			} else if (message.getType() == Type.VIDEO) {
 				try {
 					holder.iv = ((ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.chatting_content_iv));
 					holder.iv_avatar = (NetworkImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_userhead);
@@ -389,7 +389,7 @@ public class MessageAdapter extends BaseAdapter{
 
 				} catch (Exception e) {
 				}
-			} else if (message.getType() == EMMessage.Type.FILE) {
+			} else if (message.getType() == Type.FILE) {
 				try {
 					holder.iv_avatar = (NetworkImageView) convertView.findViewById(cn.ucai.superwechat.R.id.iv_userhead);
 					holder.tv_file_name = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.tv_file_name);
@@ -415,15 +415,15 @@ public class MessageAdapter extends BaseAdapter{
 		}
 
 		// 群聊时，显示接收的消息的发送人的名称
-		if ((chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == EMMessage.Direct.RECEIVE){
+		if ((chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == Direct.RECEIVE){
 		    //demo里使用username代码nick
 			UserUtils.setUserNick(message.getFrom(), holder.tv_usernick);
 		}
-		if(message.direct == EMMessage.Direct.SEND){
+		if(message.direct == Direct.SEND){
 			UserUtils.setCurrentUserNick(holder.tv_usernick);
 		}
 		// 如果是发送的消息并且不是群聊消息，显示已读textview
-		if (!(chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == EMMessage.Direct.SEND) {
+		if (!(chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom) && message.direct == Direct.SEND) {
 			holder.tv_ack = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.tv_ack);
 			holder.tv_delivered = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.tv_delivered);
 			if (holder.tv_ack != null) {
@@ -496,7 +496,7 @@ public class MessageAdapter extends BaseAdapter{
 			// not supported
 		}
 
-		if (message.direct == EMMessage.Direct.SEND) {
+		if (message.direct == Direct.SEND) {
 			View statusView = convertView.findViewById(cn.ucai.superwechat.R.id.msg_status);
 			// 重发按钮点击事件
 			statusView.setOnClickListener(new OnClickListener() {
@@ -509,17 +509,17 @@ public class MessageAdapter extends BaseAdapter{
 					intent.putExtra("title", activity.getString(cn.ucai.superwechat.R.string.resend));
 					intent.putExtra("cancel", true);
 					intent.putExtra("position", position);
-					if (message.getType() == EMMessage.Type.TXT)
+					if (message.getType() == Type.TXT)
 						activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_TEXT);
-					else if (message.getType() == EMMessage.Type.VOICE)
+					else if (message.getType() == Type.VOICE)
 						activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_VOICE);
-					else if (message.getType() == EMMessage.Type.IMAGE)
+					else if (message.getType() == Type.IMAGE)
 						activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_PICTURE);
-					else if (message.getType() == EMMessage.Type.LOCATION)
+					else if (message.getType() == Type.LOCATION)
 						activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_LOCATION);
-					else if (message.getType() == EMMessage.Type.FILE)
+					else if (message.getType() == Type.FILE)
 						activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_FILE);
-					else if (message.getType() == EMMessage.Type.VIDEO)
+					else if (message.getType() == Type.VIDEO)
 						activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_VIDEO);
 
 				}
@@ -571,11 +571,12 @@ public class MessageAdapter extends BaseAdapter{
 	private void setUserAvatar(final EMMessage message, NetworkImageView imageView){
 	    if(message.direct == Direct.SEND){
 	        //显示自己头像
+	        //UserUtils.setUserBeanAvatar(message.getUserName(), imageView);
 	        UserUtils.setCurrentUserBeanAvatar(imageView);
 	    }else{
-	        UserUtils.setUserBeanAvatar(message.getFrom(), imageView);
+	        UserUtils.setUserBeanAvatar( message.getFrom(), imageView);
 	    }
-	    imageView.setOnClickListener(new View.OnClickListener() {
+	    imageView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -605,12 +606,12 @@ public class MessageAdapter extends BaseAdapter{
 			public boolean onLongClick(View v) {
 				activity.startActivityForResult(
 						(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
-								EMMessage.Type.TXT.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
+								Type.TXT.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
 				return true;
 			}
 		});
 
-		if (message.direct == EMMessage.Direct.SEND) {
+		if (message.direct == Direct.SEND) {
 			switch (message.status) {
 			case SUCCESS: // 发送成功
 				holder.pb.setVisibility(View.GONE);
@@ -645,7 +646,7 @@ public class MessageAdapter extends BaseAdapter{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				textView.setOnClickListener(new View.OnClickListener() {
+				textView.setOnClickListener(new OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
@@ -675,7 +676,7 @@ public class MessageAdapter extends BaseAdapter{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (message.direct == EMMessage.Direct.SEND) {
+		if (message.direct == Direct.SEND) {
 			switch (message.status) {
 			case SUCCESS: // 发送成功
 				holder.pb.setVisibility(View.GONE);
@@ -724,13 +725,13 @@ public class MessageAdapter extends BaseAdapter{
 			public boolean onLongClick(View v) {
 				activity.startActivityForResult(
 						(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
-								EMMessage.Type.IMAGE.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
+								Type.IMAGE.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
 				return true;
 			}
 		});
 
 		// 接收方向的消息
-		if (message.direct == EMMessage.Direct.RECEIVE) {
+		if (message.direct == Direct.RECEIVE) {
 			// "it is receive msg";
 			if (message.status == EMMessage.Status.INPROGRESS) {
 				// "!!!! back receive";
@@ -810,7 +811,7 @@ public class MessageAdapter extends BaseAdapter{
 								// message.setProgress(0);
 								holder.staus_iv.setVisibility(View.VISIBLE);
 								Toast.makeText(activity,
-										activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), Toast.LENGTH_SHORT)
+										activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), 0)
 										.show();
 								timer.cancel();
 							}
@@ -847,7 +848,7 @@ public class MessageAdapter extends BaseAdapter{
 			public boolean onLongClick(View v) {
 				activity.startActivityForResult(
 						new Intent(activity, ContextMenu.class).putExtra("position", position).putExtra("type",
-								EMMessage.Type.VIDEO.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
+								Type.VIDEO.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
 				return true;
 			}
 		});
@@ -862,7 +863,7 @@ public class MessageAdapter extends BaseAdapter{
 		}
 		holder.playBtn.setImageResource(cn.ucai.superwechat.R.drawable.video_download_btn_nor);
 
-		if (message.direct == EMMessage.Direct.RECEIVE) {
+		if (message.direct == Direct.RECEIVE) {
 			if (videoBody.getVideoFileLength() > 0) {
 				String size = TextFormater.getDataSize(videoBody.getVideoFileLength());
 				holder.size.setText(size);
@@ -874,7 +875,7 @@ public class MessageAdapter extends BaseAdapter{
 			}
 		}
 
-		if (message.direct == EMMessage.Direct.RECEIVE) {
+		if (message.direct == Direct.RECEIVE) {
 
 			// System.err.println("it is receive msg");
 			if (message.status == EMMessage.Status.INPROGRESS) {
@@ -936,7 +937,7 @@ public class MessageAdapter extends BaseAdapter{
 								// message.setProgress(0);
 								holder.staus_iv.setVisibility(View.VISIBLE);
 								Toast.makeText(activity,
-										activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), Toast.LENGTH_SHORT)
+										activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), 0)
 										.show();
 								timer.cancel();
 							}
@@ -978,7 +979,7 @@ public class MessageAdapter extends BaseAdapter{
 			public boolean onLongClick(View v) {
 				activity.startActivityForResult(
 						(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
-								EMMessage.Type.VOICE.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
+								Type.VOICE.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
 				return true;
 			}
 		});
@@ -986,7 +987,7 @@ public class MessageAdapter extends BaseAdapter{
 				&& ((ChatActivity)activity).playMsgId.equals(message
 						.getMsgId())&&VoicePlayClickListener.isPlaying) {
 			AnimationDrawable voiceAnimation;
-			if (message.direct == EMMessage.Direct.RECEIVE) {
+			if (message.direct == Direct.RECEIVE) {
 				holder.iv.setImageResource(cn.ucai.superwechat.R.drawable.voice_from_icon);
 			} else {
 				holder.iv.setImageResource(cn.ucai.superwechat.R.drawable.voice_to_icon);
@@ -994,7 +995,7 @@ public class MessageAdapter extends BaseAdapter{
 			voiceAnimation = (AnimationDrawable) holder.iv.getDrawable();
 			voiceAnimation.start();
 		} else {
-			if (message.direct == EMMessage.Direct.RECEIVE) {
+			if (message.direct == Direct.RECEIVE) {
 				holder.iv.setImageResource(cn.ucai.superwechat.R.drawable.chatfrom_voice_playing);
 			} else {
 				holder.iv.setImageResource(cn.ucai.superwechat.R.drawable.chatto_voice_playing);
@@ -1002,7 +1003,7 @@ public class MessageAdapter extends BaseAdapter{
 		}
 		
 		
-		if (message.direct == EMMessage.Direct.RECEIVE) {
+		if (message.direct == Direct.RECEIVE) {
 			if (message.isListened()) {
 				// 隐藏语音未听标志
 				holder.iv_read_status.setVisibility(View.INVISIBLE);
@@ -1096,7 +1097,7 @@ public class MessageAdapter extends BaseAdapter{
 					// 下载
 					context.startActivity(new Intent(context, ShowNormalFileActivity.class).putExtra("msgbody", fileMessageBody));
 				}
-				if (message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
+				if (message.direct == Direct.RECEIVE && !message.isAcked && message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
 					try {
 						EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
 						message.isAcked = true;
@@ -1109,7 +1110,7 @@ public class MessageAdapter extends BaseAdapter{
 		});
 		String st1 = context.getResources().getString(cn.ucai.superwechat.R.string.Have_downloaded);
 		String st2 = context.getResources().getString(cn.ucai.superwechat.R.string.Did_not_download);
-		if (message.direct == EMMessage.Direct.RECEIVE) { // 接收的消息
+		if (message.direct == Direct.RECEIVE) { // 接收的消息
 			EMLog.d(TAG, "it is receive msg");
 			File file = new File(filePath);
 			if (file != null && file.exists()) {
@@ -1158,7 +1159,7 @@ public class MessageAdapter extends BaseAdapter{
 								holder.tv.setVisibility(View.INVISIBLE);
 								holder.staus_iv.setVisibility(View.VISIBLE);
 								Toast.makeText(activity,
-										activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), Toast.LENGTH_SHORT)
+										activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), 0)
 										.show();
 								timer.cancel();
 							}
@@ -1195,12 +1196,12 @@ public class MessageAdapter extends BaseAdapter{
 			public boolean onLongClick(View v) {
 				activity.startActivityForResult(
 						(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
-								EMMessage.Type.LOCATION.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
+								Type.LOCATION.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
 				return false;
 			}
 		});
 
-		if (message.direct == EMMessage.Direct.RECEIVE) {
+		if (message.direct == Direct.RECEIVE) {
 			return;
 		}
 		// deal with send message
@@ -1226,6 +1227,7 @@ public class MessageAdapter extends BaseAdapter{
 	 * 
 	 * @param message
 	 * @param holder
+	 *
 	 */
 	public void sendMsgInBackground(final EMMessage message, final ViewHolder holder) {
 		holder.staus_iv.setVisibility(View.GONE);
@@ -1277,7 +1279,7 @@ public class MessageAdapter extends BaseAdapter{
 					@Override
 					public void run() {
 						// message.setBackReceive(false);
-						if (message.getType() == EMMessage.Type.IMAGE) {
+						if (message.getType() == Type.IMAGE) {
 							holder.pb.setVisibility(View.GONE);
 							holder.tv.setVisibility(View.GONE);
 						}
@@ -1293,7 +1295,7 @@ public class MessageAdapter extends BaseAdapter{
 
 			@Override
 			public void onProgress(final int progress, String status) {
-				if (message.getType() == EMMessage.Type.IMAGE) {
+				if (message.getType() == Type.IMAGE) {
 					activity.runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -1347,7 +1349,7 @@ public class MessageAdapter extends BaseAdapter{
 							// message.setSendingStatus(Message.SENDING_STATUS_FAIL);
 							holder.staus_iv.setVisibility(View.VISIBLE);
 							Toast.makeText(activity,
-									activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), Toast.LENGTH_SHORT).show();
+									activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), 0).show();
 						}
 					});
 				}
@@ -1378,7 +1380,7 @@ public class MessageAdapter extends BaseAdapter{
 			@Override
 			public void run() {
 				// send success
-				if (message.getType() == EMMessage.Type.VIDEO) {
+				if (message.getType() == Type.VIDEO) {
 					holder.tv.setVisibility(View.GONE);
 				}
 				EMLog.d(TAG, "message status : " + message.status);
@@ -1400,13 +1402,13 @@ public class MessageAdapter extends BaseAdapter{
 					// holder.staus_iv.setVisibility(View.VISIBLE);
 				    
 				    if(message.getError() == EMError.MESSAGE_SEND_INVALID_CONTENT){
-				        Toast.makeText(activity, activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.error_send_invalid_content), Toast.LENGTH_SHORT)
+				        Toast.makeText(activity, activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.error_send_invalid_content), 0)
                         .show();
 				    }else if(message.getError() == EMError.MESSAGE_SEND_NOT_IN_THE_GROUP){
-				        Toast.makeText(activity, activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.error_send_not_in_the_group), Toast.LENGTH_SHORT)
+				        Toast.makeText(activity, activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.error_send_not_in_the_group), 0)
                         .show();
 				    }else{
-				        Toast.makeText(activity, activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), Toast.LENGTH_SHORT)
+				        Toast.makeText(activity, activity.getString(cn.ucai.superwechat.R.string.send_fail) + activity.getString(cn.ucai.superwechat.R.string.connect_failuer_toast), 0)
                         .show();
 				    }
 				}
@@ -1421,6 +1423,7 @@ public class MessageAdapter extends BaseAdapter{
 	 * 
 	 * @param thumbernailPath
 	 * @param iv
+	 * @param position
 	 * @return the image exists or not
 	 */
 	private boolean showImageView(final String thumbernailPath, final ImageView iv, final String localFullSizePath, String remoteDir,
@@ -1438,7 +1441,7 @@ public class MessageAdapter extends BaseAdapter{
 			// thumbnail image is already loaded, reuse the drawable
 			iv.setImageBitmap(bitmap);
 			iv.setClickable(true); 
-			iv.setOnClickListener(new View.OnClickListener() {
+			iv.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					EMLog.d(TAG, "image view on click");
@@ -1457,7 +1460,7 @@ public class MessageAdapter extends BaseAdapter{
 						intent.putExtra("secret", body.getSecret());
 						intent.putExtra("remotepath", remote);
 					}
-					if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked
+					if (message != null && message.direct == Direct.RECEIVE && !message.isAcked
 							&& message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
 						try {
 							EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
@@ -1495,7 +1498,7 @@ public class MessageAdapter extends BaseAdapter{
 			// thumbnail image is already loaded, reuse the drawable
 			iv.setImageBitmap(bitmap);
 			iv.setClickable(true);
-			iv.setOnClickListener(new View.OnClickListener() {
+			iv.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -1505,7 +1508,7 @@ public class MessageAdapter extends BaseAdapter{
 					intent.putExtra("localpath", videoBody.getLocalUrl());
 					intent.putExtra("secret", videoBody.getSecret());
 					intent.putExtra("remotepath", videoBody.getRemoteUrl());
-					if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked
+					if (message != null && message.direct == Direct.RECEIVE && !message.isAcked
 							&& message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
 						message.isAcked = true;
 						try {
@@ -1554,7 +1557,7 @@ public class MessageAdapter extends BaseAdapter{
 	/*
 	 * 点击地图消息listener
 	 */
-	class MapClickListener implements View.OnClickListener {
+	class MapClickListener implements OnClickListener {
 
 		LatLng location;
 		String address;

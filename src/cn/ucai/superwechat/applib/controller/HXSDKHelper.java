@@ -28,6 +28,7 @@ import com.easemob.EMError;
 import com.easemob.EMValueCallBack;
 import cn.ucai.superwechat.applib.model.DefaultHXSDKModel;
 import cn.ucai.superwechat.applib.model.HXNotifier;
+import cn.ucai.superwechat.applib.model.HXNotifier.HXNotificationInfoProvider;
 import cn.ucai.superwechat.applib.model.HXSDKModel;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatConfig.EMEnvMode;
@@ -344,7 +345,7 @@ public abstract class HXSDKHelper {
        return EMChat.getInstance().isLoggedIn();
     }
     
-    protected HXNotifier.HXNotificationInfoProvider getNotificationListener(){
+    protected HXNotificationInfoProvider getNotificationListener(){
         return null;
     }
 

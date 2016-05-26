@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easemob.chat.EMContactManager;
-import cn.ucai.superwechat.R;
 import com.easemob.exceptions.EaseMobException;
 
 /**
@@ -33,9 +32,9 @@ public class BlacklistActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_black_list);
+		setContentView(cn.ucai.superwechat.R.layout.activity_black_list);
 
-		listView = (ListView) findViewById(R.id.list);
+		listView = (ListView) findViewById(cn.ucai.superwechat.R.id.list);
 
 		// 从本地获取黑名单
 		 List<String> blacklist = EMContactManager.getInstance().getBlackListUsernames();
@@ -55,12 +54,12 @@ public class BlacklistActivity extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		getMenuInflater().inflate(R.menu.remove_from_blacklist, menu);
+		getMenuInflater().inflate(cn.ucai.superwechat.R.menu.remove_from_blacklist, menu);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.remove) {
+		if (item.getItemId() == cn.ucai.superwechat.R.id.remove) {
 			final String tobeRemoveUser = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
 			// 把目标user移出黑名单
 			removeOutBlacklist(tobeRemoveUser);
@@ -76,7 +75,7 @@ public class BlacklistActivity extends Activity {
 	 */
 	void removeOutBlacklist(final String tobeRemoveUser) {
 	    final ProgressDialog pd = new ProgressDialog(this);
-	    pd.setMessage(getString(R.string.be_removing));
+	    pd.setMessage(getString(cn.ucai.superwechat.R.string.be_removing));
 	    pd.setCanceledOnTouchOutside(false);
 	    pd.show();
 	    new Thread(new Runnable() {
@@ -95,7 +94,7 @@ public class BlacklistActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         public void run() {
                             pd.dismiss();
-                            Toast.makeText(getApplicationContext(), R.string.Removed_from_the_failure, 0).show();
+                            Toast.makeText(getApplicationContext(), cn.ucai.superwechat.R.string.Removed_from_the_failure, 0).show();
                         }
                     });
                 }
@@ -116,10 +115,10 @@ public class BlacklistActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = View.inflate(getContext(), R.layout.row_contact, null);
+				convertView = View.inflate(getContext(), cn.ucai.superwechat.R.layout.row_contact, null);
 			}
 
-			TextView name = (TextView) convertView.findViewById(R.id.name);
+			TextView name = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.name);
 			name.setText(getItem(position));
 
 			return convertView;

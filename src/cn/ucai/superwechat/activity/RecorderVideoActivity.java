@@ -11,16 +11,10 @@
  */
 package cn.ucai.superwechat.activity;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -50,11 +44,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.easemob.util.EMLog;
+import com.easemob.util.PathUtil;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.video.util.Utils;
-import com.easemob.util.EMLog;
-import com.easemob.util.PathUtil;
 
 public class RecorderVideoActivity extends BaseActivity implements
 		OnClickListener, SurfaceHolder.Callback, OnErrorListener,
@@ -87,7 +89,7 @@ public class RecorderVideoActivity extends BaseActivity implements
 		// 选择支持半透明模式，在有surfaceview的activity中使用
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		setContentView(R.layout.recorder_activity);
-		PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
 				CLASS_LABEL);
 		mWakeLock.acquire();
@@ -120,7 +122,7 @@ public class RecorderVideoActivity extends BaseActivity implements
 		super.onResume();
 		if (mWakeLock == null) {
 			// 获取唤醒锁,保持屏幕常亮
-			PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+			PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 			mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
 					CLASS_LABEL);
 			mWakeLock.acquire();
@@ -138,7 +140,7 @@ public class RecorderVideoActivity extends BaseActivity implements
 			} else {
 				mCamera = Camera.open(CameraInfo.CAMERA_FACING_FRONT);
 			}
-			Camera.Parameters camParams = mCamera.getParameters();
+			Parameters camParams = mCamera.getParameters();
 			mCamera.lock();
 			mSurfaceHolder = mVideoView.getHolder();
 			mSurfaceHolder.addCallback(this);
@@ -179,10 +181,10 @@ public class RecorderVideoActivity extends BaseActivity implements
 
 		}
 		// 获取摄像头的所有支持的分辨率
-		List<Camera.Size> resolutionList = Utils.getResolutionList(mCamera);
+		List<Size> resolutionList = Utils.getResolutionList(mCamera);
 		if (resolutionList != null && resolutionList.size() > 0) {
 			Collections.sort(resolutionList, new Utils.ResolutionComparator());
-			Camera.Size previewSize = null;
+			Size previewSize = null;
 			boolean hasSize = false;
 			// 如果摄像头支持640*480，那么强制设为640*480
 			for (int i = 0; i < resolutionList.size(); i++) {

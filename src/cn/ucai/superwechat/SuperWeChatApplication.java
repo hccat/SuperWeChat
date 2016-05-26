@@ -28,7 +28,8 @@ import cn.ucai.superwechat.bean.User;
 import cn.ucai.superwechat.data.RequestManager;
 
 public class SuperWeChatApplication extends Application {
-	public static String SERVER_ROOT = "http://10.0.2.2:8080/SuperWeChatServer/Server";
+	public  static String SERVER_ROOT = "http://10.0.2.2:8080/SuperWeChatServer/Server";
+//	public  static String SERVER_ROOT = "http://192.168.191.1:8080/SuperWeChatServer/Server";
 
 	public static Context applicationContext;
 	private static SuperWeChatApplication instance;
@@ -45,8 +46,7 @@ public class SuperWeChatApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
         applicationContext = this;
-		instance = this;
-		RequestManager.init(applicationContext);
+        instance = this;
 
         /**
          * this function will initialize the HuanXin SDK
@@ -67,6 +67,7 @@ public class SuperWeChatApplication extends Application {
          * }
          */
         hxSDKHelper.onInit(applicationContext);
+		RequestManager.init(applicationContext);
 	}
 
 	public static SuperWeChatApplication getInstance() {
@@ -119,22 +120,18 @@ public class SuperWeChatApplication extends Application {
 	    hxSDKHelper.logout(isGCM,emCallBack);
 	}
 
-	/** 全局的当前登录对象*/
+	/**全局的当前登录用户对象*/
 	private User user;
-	/** 全局的当前登陆用户的好友列表*/
+	/**全局的当前登录用户的好友列表*/
 	private ArrayList<Contact> contactList = new ArrayList<Contact>();
-	/** 全局的当前登录用户的好友集合*/
-	private HashMap<String,Contact> userList =new HashMap<String,Contact>();
-	/** 全局的群组集合*/
-	private ArrayList<Group> groupList =new ArrayList<Group>();
+	/**全局的当前登录用户的好友集合*/
+	private HashMap<String,Contact> userList = new HashMap<String, Contact>();
+	/**全局的群组集合*/
+	private ArrayList<Group> groupList = new ArrayList<Group>();
 	/**全局的当前公共群列表*/
 	private ArrayList<Group> publicGroupList = new ArrayList<Group>();
 	/**全局的群组成员列表*/
 	private HashMap<String,ArrayList<Member>> groupMembers = new HashMap<String, ArrayList<Member>>();
-
-	public HashMap<String, ArrayList<Member>> getGroupMembers() {
-		return groupMembers;
-	}
 
 	public User getUser() {
 		return user;
@@ -148,7 +145,20 @@ public class SuperWeChatApplication extends Application {
 		return userList;
 	}
 
+	public ArrayList<Group> getGroupList() {
+		return groupList;
+	}
+
+	public ArrayList<Group> getPublicGroupList() {
+		return publicGroupList;
+	}
+
+	public HashMap<String, ArrayList<Member>> getGroupMembers() {
+		return groupMembers;
+	}
+
 	public void setUser(User user) {
+
 		this.user = user;
 	}
 
@@ -170,14 +180,5 @@ public class SuperWeChatApplication extends Application {
 
 	public void setGroupMembers(HashMap<String, ArrayList<Member>> groupMembers) {
 		this.groupMembers = groupMembers;
-	}
-
-	public ArrayList<Group> getGroupList() {
-
-		return groupList;
-	}
-
-	public ArrayList<Group> getPublicGroupList() {
-		return publicGroupList;
 	}
 }

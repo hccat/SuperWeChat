@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.easemob.chat.EMGroupManager;
-import cn.ucai.superwechat.R;
 import com.easemob.exceptions.EaseMobException;
 
 import android.content.Context;
@@ -30,15 +29,15 @@ public class GroupBlacklistActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
-		setContentView(R.layout.activity_group_blacklist);
+		setContentView(cn.ucai.superwechat.R.layout.activity_group_blacklist);
 
-		progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		listView = (ListView) findViewById(R.id.list);
+		progressBar = (ProgressBar) findViewById(cn.ucai.superwechat.R.id.progressBar);
+		listView = (ListView) findViewById(cn.ucai.superwechat.R.id.list);
 
 		groupId = getIntent().getStringExtra("groupId");
 		// 注册上下文菜单
 		registerForContextMenu(listView);
-		final String st1 = getResources().getString(R.string.get_failed_please_check);
+		final String st1 = getResources().getString(cn.ucai.superwechat.R.string.get_failed_please_check);
 		new Thread(new Runnable() {
 
 			public void run() {
@@ -70,12 +69,12 @@ public class GroupBlacklistActivity extends BaseActivity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		getMenuInflater().inflate(R.menu.remove_from_blacklist, menu);
+		getMenuInflater().inflate(cn.ucai.superwechat.R.menu.remove_from_blacklist, menu);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.remove) {
+		if (item.getItemId() == cn.ucai.superwechat.R.id.remove) {
 			final String tobeRemoveUser = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
 			// 移出黑名单
 			removeOutBlacklist(tobeRemoveUser);
@@ -90,7 +89,7 @@ public class GroupBlacklistActivity extends BaseActivity {
 	 * @param tobeRemoveUser
 	 */
 	void removeOutBlacklist(final String tobeRemoveUser) {
-		final String st2 = getResources().getString(R.string.Removed_from_the_failure);
+		final String st2 = getResources().getString(cn.ucai.superwechat.R.string.Removed_from_the_failure);
 		try {
 			// 移出黑民单
 		    EMGroupManager.getInstance().unblockUser(groupId, tobeRemoveUser);
@@ -118,10 +117,10 @@ public class GroupBlacklistActivity extends BaseActivity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null) {
-				convertView = View.inflate(getContext(), R.layout.row_contact, null);
+				convertView = View.inflate(getContext(), cn.ucai.superwechat.R.layout.row_contact, null);
 			}
 
-			TextView name = (TextView) convertView.findViewById(R.id.name);
+			TextView name = (TextView) convertView.findViewById(cn.ucai.superwechat.R.id.name);
 			name.setText(getItem(position));
 
 			return convertView;

@@ -13,29 +13,29 @@
  */
 package cn.ucai.superwechat.adapter;
 
-import java.util.Date;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMMessage;
+import com.easemob.util.DateUtils;
+
+import java.util.Date;
+import java.util.List;
 
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.SmileUtils;
-import com.easemob.util.DateUtils;
 
 /**
  * 聊天记录adpater
@@ -62,7 +62,7 @@ public class ChatHistoryAdapter extends ArrayAdapter<EMContact> {
 			holder.unreadLabel = (TextView) convertView.findViewById(R.id.unread_msg_number);
 			holder.message = (TextView) convertView.findViewById(R.id.message);
 			holder.time = (TextView) convertView.findViewById(R.id.time);
-			holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
+			holder.avatar = (NetworkImageView) convertView.findViewById(R.id.avatar);
 			holder.msgState = convertView.findViewById(R.id.msg_state);
 			holder.list_item_layout=(RelativeLayout) convertView.findViewById(R.id.list_item_layout);
 			convertView.setTag(holder);
@@ -73,8 +73,6 @@ public class ChatHistoryAdapter extends ArrayAdapter<EMContact> {
 		}else{
 			holder.list_item_layout.setBackgroundResource(R.drawable.mm_listitem_grey);
 		}
-		
-		
 		EMContact user = getItem(position);
 		if(user instanceof EMGroup){
 			//群聊消息，显示群聊头像
@@ -124,7 +122,7 @@ public class ChatHistoryAdapter extends ArrayAdapter<EMContact> {
 		/** 最后一条消息的时间 */
 		TextView time;
 		/** 用户头像 */
-		ImageView avatar;
+		NetworkImageView avatar;
 		/** 最后一条消息的发送状态 */
 		View msgState;
 		/**整个list中每一行总布局*/

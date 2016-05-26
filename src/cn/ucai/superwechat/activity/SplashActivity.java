@@ -6,7 +6,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +23,7 @@ import cn.ucai.superwechat.task.DownloadAllGroupTask;
 import cn.ucai.superwechat.task.DownloadContactListTask;
 import cn.ucai.superwechat.task.DownloadPublicGroupTask;
 
+
 /**
  * 开屏页
  *
@@ -32,6 +32,7 @@ public class SplashActivity extends BaseActivity {
 	private RelativeLayout rootLayout;
 	private TextView versionText;
 	Context mContext;
+	String currentUsername;
 	
 	private static final int sleepTime = 2000;
 
@@ -39,7 +40,7 @@ public class SplashActivity extends BaseActivity {
 	protected void onCreate(Bundle arg0) {
 		setContentView(R.layout.activity_splash);
 		super.onCreate(arg0);
-		mContext = this;
+		mContext=this;
 
 		rootLayout = (RelativeLayout) findViewById(R.id.splash_root);
 		versionText = (TextView) findViewById(R.id.tv_version);
@@ -53,21 +54,19 @@ public class SplashActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+
 		if (DemoHXSDKHelper.getInstance().isLogined()) {
 			String username = SuperWeChatApplication.getInstance().getUserName();
-            Log.e("main", "userName=" + username);
-            UserDao dao = new UserDao(mContext);
+			UserDao dao = new UserDao(mContext);
 			User user = dao.findUserByUserName(username);
-			Log.e("main","splash,user="+user);
 			SuperWeChatApplication.getInstance().setUser(user);
-
-			new DownloadContactListTask(mContext, username).execute();
-			new DownloadAllGroupTask(mContext,username).execute();
-			new DownloadPublicGroupTask(mContext, username, I.PAGE_ID_DEFAULT, I.PAGE_SIZE_DEFAULT).execute();
+			new DownloadContactListTask(mContext,currentUsername).execute();
+			new DownloadAllGroupTask(mContext,currentUsername).execute();
+			new DownloadPublicGroupTask(mContext, currentUsername, I.PAGE_ID_DEFAULT, I.PAGE_SIZE_DEFAULT).execute();
 
 		}
-
 		new Thread(new Runnable() {
+
 			public void run() {
 				if (DemoHXSDKHelper.getInstance().isLogined()) {
 					// ** 免登陆情况 加载所有本地群和会话

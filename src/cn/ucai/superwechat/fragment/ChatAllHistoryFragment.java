@@ -6,8 +6,10 @@ import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -49,7 +51,7 @@ import cn.ucai.superwechat.db.InviteMessgeDao;
  * 显示所有会话记录，比较简单的实现，更好的可能是把陌生人存入本地，这样取到的聊天记录是可控的
  * 
  */
-public class ChatAllHistoryFragment extends Fragment implements View.OnClickListener {
+public class ChatAllHistoryFragment extends Fragment implements OnClickListener {
 
 	private InputMethodManager inputMethodManager;
 	private ListView listView;
@@ -70,6 +72,7 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		registerContactReceiver();
 		if(savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
             return;
 		inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -298,6 +301,29 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onClick(View v) {        
+    public void onClick(View v) {
+
     }
+	class ContactListChangeReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			adapter.notifyDataSetChanged();
+		}
+	}
+	private ContactListChangeReceiver mContactListChangeReceiver;
+
+	private void registerContactReceiver () {
+		mContactListChangeReceiver = new ContactListChangeReceiver();
+		IntentFilter filter = new IntentFilter("update_contact_list");
+		getActivity().registerReceiver(mContactListChangeReceiver, filter);
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if(mContactListChangeReceiver!=null){
+			getActivity().unregisterReceiver(mContactListChangeReceiver);
+		}
+	}
+
 }

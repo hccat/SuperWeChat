@@ -30,7 +30,7 @@ import android.widget.ProgressBar;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
-import cn.ucai.superwechat.R;
+
 import cn.ucai.superwechat.task.LoadLocalBigImgTask;
 import cn.ucai.superwechat.utils.ImageCache;
 import cn.ucai.superwechat.widget.photoview.PhotoView;
@@ -47,7 +47,7 @@ public class ShowBigImage extends BaseActivity {
 	private static final String TAG = "ShowBigImage"; 
 	private ProgressDialog pd;
 	private PhotoView image;
-	private int default_res = R.drawable.default_image;
+	private int default_res = cn.ucai.superwechat.R.drawable.default_image;
 	private String localFilePath;
 	private Bitmap bitmap;
 	private boolean isDownloaded;
@@ -56,12 +56,12 @@ public class ShowBigImage extends BaseActivity {
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.activity_show_big_image);
+		setContentView(cn.ucai.superwechat.R.layout.activity_show_big_image);
 		super.onCreate(savedInstanceState);
 
-		image = (PhotoView) findViewById(R.id.image);
-		loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
-		default_res = getIntent().getIntExtra("default_image", R.drawable.default_avatar);
+		image = (PhotoView) findViewById(cn.ucai.superwechat.R.id.image);
+		loadLocalPb = (ProgressBar) findViewById(cn.ucai.superwechat.R.id.pb_load_local);
+		default_res = getIntent().getIntExtra("default_image", cn.ucai.superwechat.R.drawable.default_avatar);
 		Uri uri = getIntent().getParcelableExtra("uri");
 		String remotepath = getIntent().getExtras().getString("remotepath");
 		String secret = getIntent().getExtras().getString("secret");
@@ -133,7 +133,7 @@ public class ShowBigImage extends BaseActivity {
 	 * @param remoteFilePath
 	 */
 	private void downloadImage(final String remoteFilePath, final Map<String, String> headers) {
-		String str1 = getResources().getString(R.string.Download_the_pictures);
+		String str1 = getResources().getString(cn.ucai.superwechat.R.string.Download_the_pictures);
 		pd = new ProgressDialog(this);
 		pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		pd.setCanceledOnTouchOutside(false);
@@ -183,7 +183,7 @@ public class ShowBigImage extends BaseActivity {
 
 			public void onProgress(final int progress, String status) {
 				EMLog.d(TAG, "Progress: " + progress);
-				final String str2 = getResources().getString(R.string.Download_the_pictures_new);
+				final String str2 = getResources().getString(cn.ucai.superwechat.R.string.Download_the_pictures_new);
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {

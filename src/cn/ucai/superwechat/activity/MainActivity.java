@@ -83,7 +83,6 @@ import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.Utils;
 
 public class MainActivity extends BaseActivity implements EMEventListener {
-	Activity mContext;
 
 	protected static final String TAG = "MainActivity";
 	// 未读消息textview
@@ -108,6 +107,8 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	private MyConnectionListener connectionListener = null;
 	private MyGroupChangeListener groupChangeListener = null;
 
+	Activity mContext;
+
 	/**
 	 * 检查当前用户是否被删除
 	 */
@@ -119,7 +120,6 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		
 		if (savedInstanceState != null && savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED, false)) {
 			// 防止被移除后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 			// 三个fragment里加的判断同理
@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 		
 		init();
 		//异步获取当前用户的昵称和头像
-		((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager().asyncGetCurrentUserInfo();
+		((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().asyncGetCurrentUserInfo();
 	}
 
 	private void init() {     
@@ -527,14 +527,13 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	 */
 	public class MyContactListener implements EMContactListener {
 
-
 		@Override
 		public void onContactAdded(List<String> usernameList) {			
 			// 保存增加的联系人
 			Map<String, EMUser> localUsers = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
 			HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
 			Map<String, EMUser> toAddUsers = new HashMap<String, EMUser>();
-			ArrayList<String> toAddUserName = new ArrayList<String>();
+			ArrayList<String> toAddUserNames = new ArrayList<String>();
 			boolean isAdd = false;
 			for (String username : usernameList) {
 				EMUser user = setUserHead(username);
@@ -543,25 +542,25 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 					userDao.saveContact(user);
 					isAdd = true;
 				}
-				if (!userList.containsKey(username)) {
-					toAddUserName.add(username);
-				}
 				toAddUsers.put(username, user);
+				if (!userList.containsKey(username)) {
+					toAddUserNames.add(username);
+				}
 			}
-			localUsers.putAll(toAddUsers);
-			for (String name:usernameList) {
+			for (String name : toAddUserNames) {
 				if (isAdd) {
 					try {
-						String path = new ApiParams().with(I.Contact.USER_NAME,SuperWeChatApplication.getInstance().getUserName())
-								.with(I.Contact.CU_NAME,name)
-								.getRequestUrl(I.REQUEST_ADD_CONTACT);
-						executeRequest(new GsonRequest<Contact>(path,Contact.class,responseAddContactListener(),errorListener()));
+						String path = new ApiParams()
+                                .with(I.Contact.USER_NAME, SuperWeChatApplication.getInstance().getUserName())
+                                .with(I.Contact.CU_NAME, name)
+                                .getRequestUrl(I.REQUEST_ADD_CONTACT);
+						executeRequest(new GsonRequest<Contact>(path, Contact.class,responseAddContactListener(),errorListener()));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
-
+			localUsers.putAll(toAddUsers);
 			// 刷新ui
 			if (currentTabIndex == 1)
 				contactListFragment.refresh();
@@ -572,45 +571,51 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 			return new Response.Listener<Contact>() {
 				@Override
 				public void onResponse(Contact contact) {
-					if (contact!=null&&contact.isResult()) {
+					if (contact != null && contact.isResult()) {
 						HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
 						ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
 						if (!userList.containsKey(contact.getMContactCname())) {
 							userList.put(contact.getMContactCname(), contact);
 							contactList.add(contact);
-							sendStickyBroadcast(new Intent("update_contact_list"));
+							sendBroadcast(new Intent("update_contact_list"));
 						}
+						Utils.showToast(mContext, Utils.getResourceString(mContext, contact.getMsg()), Toast.LENGTH_SHORT);
 					}
-					Utils.showToast(mContext,Utils.getResourceString(mContext,contact.getMsg()),Toast.LENGTH_LONG);
+
 				}
 			};
 		}
 
+
 		@Override
 		public void onContactDeleted(final List<String> usernameList) {
 			// 被删除
-			Map<String, EMUser> localUsers = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
 			HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
+			Map<String, EMUser> localUsers = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
+			ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
 			ArrayList<String> toDeleteUserNames = new ArrayList<String>();
+
 			for (String username : usernameList) {
 				localUsers.remove(username);
 				userDao.deleteContact(username);
 				inviteMessgeDao.deleteMessage(username);
 				if (userList.containsKey(username)) {
 					toDeleteUserNames.add(username);
+
 				}
-			}
-			if (toDeleteUserNames.size()>0) {
-				for (String name : toDeleteUserNames) {
-					try {
-						String path = new ApiParams()
-                                .with(I.Contact.USER_NAME,SuperWeChatApplication.getInstance().getUserName())
-                                .with(I.Contact.CU_NAME,name)
-                                .getRequestUrl(I.REQUEST_DELETE_CONTACT);
-						executeRequest(new GsonRequest<Boolean>(path,Boolean.class,responseDeleteContactListener(name),errorListener()));
-					} catch (Exception e) {
-						e.printStackTrace();
+				if (toDeleteUserNames.size()>0) {
+					for (String name:toDeleteUserNames) {
+						try {
+							String path = new ApiParams()
+									.with(I.Contact.USER_NAME, SuperWeChatApplication.getInstance().getUserName())
+									.with(I.Contact.CU_NAME, username)
+									.getRequestUrl(I.REQUEST_DELETE_CONTACT);
+							executeRequest(new GsonRequest<Boolean>(path, Boolean.class,responseDeleteContactListener(username),errorListener()));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
+
 				}
 			}
 			runOnUiThread(new Runnable() {
@@ -632,23 +637,19 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 		}
 
-		private Response.Listener<Boolean> responseDeleteContactListener(final String name) {
+		private Response.Listener<Boolean> responseDeleteContactListener(final String username) {
 			return new Response.Listener<Boolean>() {
 				@Override
-				public void onResponse(Boolean response) {
-					if (response) {
-						HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
-						if (userList.containsKey(name)) {
-							ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
-							Contact contact = userList.get(name);
-							contactList.remove(contact);
-							userList.remove(name);
-							mContext.sendStickyBroadcast(new Intent("update_contact_list"));
-						}
-					}
+				public void onResponse(Boolean aBoolean) {
+					HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
+					Contact contact = userList.get(username);
+					SuperWeChatApplication.getInstance().getContactList().remove(contact);
+					SuperWeChatApplication.getInstance().getUserList().remove(username);
+					sendBroadcast(new Intent("update_contact_list"));
 				}
 			};
 		}
+
 
 		@Override
 		public void onContactInvited(String username, String reason) {

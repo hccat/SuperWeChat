@@ -13,13 +13,14 @@
  */
 package cn.ucai.superwechat.db;
 
-import android.content.Context;
-
 import java.util.List;
 import java.util.Map;
 
-import cn.ucai.superwechat.domain.RobotUser;
+import android.content.Context;
+
+
 import cn.ucai.superwechat.domain.EMUser;
+import cn.ucai.superwechat.domain.RobotUser;
 
 public class EMUserDao {
 	public static final String TABLE_NAME = "uers";

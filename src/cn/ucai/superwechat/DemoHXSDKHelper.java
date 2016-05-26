@@ -45,8 +45,8 @@ import cn.ucai.superwechat.activity.ChatActivity;
 import cn.ucai.superwechat.activity.MainActivity;
 import cn.ucai.superwechat.activity.VideoCallActivity;
 import cn.ucai.superwechat.activity.VoiceCallActivity;
-import cn.ucai.superwechat.domain.RobotUser;
 import cn.ucai.superwechat.domain.EMUser;
+import cn.ucai.superwechat.domain.RobotUser;
 import cn.ucai.superwechat.receiver.CallReceiver;
 import cn.ucai.superwechat.utils.CommonUtils;
 import com.easemob.util.EMLog;
@@ -531,7 +531,7 @@ public class DemoHXSDKHelper extends HXSDKHelper {
     }
 
     /**
-     * update User cach And db
+     * update EMUser cach And db
      *
      * @param contactList
      */

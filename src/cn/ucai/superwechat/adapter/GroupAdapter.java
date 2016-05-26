@@ -13,8 +13,6 @@
  */
 package cn.ucai.superwechat.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,7 +27,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.easemob.chat.EMGroup;
-import cn.ucai.superwechat.R;
+
+import java.util.List;
 
 public class GroupAdapter extends ArrayAdapter<EMGroup> {
 
@@ -40,8 +39,8 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 	public GroupAdapter(Context context, int res, List<EMGroup> groups) {
 		super(context, res, groups);
 		this.inflater = LayoutInflater.from(context);
-		newGroup = context.getResources().getString(R.string.The_new_group_chat);
-		addPublicGroup = context.getResources().getString(R.string.add_public_group_chat);
+		newGroup = context.getResources().getString(cn.ucai.superwechat.R.string.The_new_group_chat);
+		addPublicGroup = context.getResources().getString(cn.ucai.superwechat.R.string.add_public_group_chat);
 	}
 
 	@Override
@@ -66,10 +65,10 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (getItemViewType(position) == 0) {
 			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.search_bar_with_padding, null);
+				convertView = inflater.inflate(cn.ucai.superwechat.R.layout.search_bar_with_padding, null);
 			}
-			final EditText query = (EditText) convertView.findViewById(R.id.query);
-			final ImageButton clearSearch = (ImageButton) convertView.findViewById(R.id.search_clear);
+			final EditText query = (EditText) convertView.findViewById(cn.ucai.superwechat.R.id.query);
+			final ImageButton clearSearch = (ImageButton) convertView.findViewById(cn.ucai.superwechat.R.id.search_clear);
 			query.addTextChangedListener(new TextWatcher() {
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					getFilter().filter(s);
@@ -94,23 +93,23 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 			});
 		} else if (getItemViewType(position) == 1) {
 			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.row_add_group, null);
+				convertView = inflater.inflate(cn.ucai.superwechat.R.layout.row_add_group, null);
 			}
-			((ImageView) convertView.findViewById(R.id.avatar)).setImageResource(R.drawable.create_group);
-			((TextView) convertView.findViewById(R.id.name)).setText(newGroup);
+			((ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.avatar)).setImageResource(cn.ucai.superwechat.R.drawable.create_group);
+			((TextView) convertView.findViewById(cn.ucai.superwechat.R.id.name)).setText(newGroup);
 		} else if (getItemViewType(position) == 2) {
 			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.row_add_group, null);
+				convertView = inflater.inflate(cn.ucai.superwechat.R.layout.row_add_group, null);
 			}
-			((ImageView) convertView.findViewById(R.id.avatar)).setImageResource(R.drawable.add_public_group);
-			((TextView) convertView.findViewById(R.id.name)).setText(addPublicGroup);
-			((TextView) convertView.findViewById(R.id.header)).setVisibility(View.VISIBLE);
+			((ImageView) convertView.findViewById(cn.ucai.superwechat.R.id.avatar)).setImageResource(cn.ucai.superwechat.R.drawable.add_public_group);
+			((TextView) convertView.findViewById(cn.ucai.superwechat.R.id.name)).setText(addPublicGroup);
+			((TextView) convertView.findViewById(cn.ucai.superwechat.R.id.header)).setVisibility(View.VISIBLE);
 
 		} else {
 			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.row_group, null);
+				convertView = inflater.inflate(cn.ucai.superwechat.R.layout.row_group, null);
 			}
-			((TextView) convertView.findViewById(R.id.name)).setText(getItem(position - 3).getGroupName());
+			((TextView) convertView.findViewById(cn.ucai.superwechat.R.id.name)).setText(getItem(position - 3).getGroupName());
 
 		}
 

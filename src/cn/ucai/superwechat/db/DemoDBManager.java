@@ -12,10 +12,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import cn.ucai.superwechat.Constant;
+import cn.ucai.superwechat.domain.EMUser;
 import cn.ucai.superwechat.domain.InviteMessage;
 import cn.ucai.superwechat.domain.InviteMessage.InviteMesageStatus;
 import cn.ucai.superwechat.domain.RobotUser;
-import cn.ucai.superwechat.domain.EMUser;
+
 import com.easemob.util.HanziToPinyin;
 
 public class DemoDBManager {

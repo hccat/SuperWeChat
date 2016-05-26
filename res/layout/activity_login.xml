@@ -100,7 +100,7 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/btnlogin"
+                android:id="@+id/btnLoginRegister"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
@@ -110,12 +110,12 @@
                 android:gravity="center"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"
-                android:text="@string/login"
+                android:text="@string/register"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnregister"
+                android:id="@+id/btnLoginLogin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
@@ -125,12 +125,13 @@
                 android:gravity="center"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"
-                android:text="@string/register"
+                android:text="@string/login"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
         </LinearLayout>
     </RelativeLayout>
     <Button
+        android:id="@+id/btnSetIP"
         android:background="@null"
         android:text="设置服务器的IP地址"
         android:textColor="#000"

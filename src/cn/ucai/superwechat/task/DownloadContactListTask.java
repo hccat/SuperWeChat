@@ -2,7 +2,7 @@ package cn.ucai.superwechat.task;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+
 
 import com.android.volley.Response;
 
@@ -35,35 +35,42 @@ public class DownloadContactListTask extends BaseActivity {
     private void initPath() {
         try {
             path = new ApiParams()
-                    .with(I.Contact.USER_NAME,username)
+                    .with(I.Contact.USER_NAME, username)
                     .getRequestUrl(I.REQUEST_DOWNLOAD_CONTACT_ALL_LIST);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     public void execute() {
-        executeRequest(new GsonRequest<Contact[]>(path, Contact[].class,responseDownloadContactListTaskListener(),errorListener()));
+        executeRequest(new GsonRequest<Contact[]>(path, Contact[].class,
+                responseDownloadContactListTaskListener(), errorListener()));
     }
 
     private Response.Listener<Contact[]> responseDownloadContactListTaskListener() {
         return new Response.Listener<Contact[]>() {
             @Override
-            public void onResponse(Contact[] contacts) {
-                Log.e(TAG, "DownloadContactListTask,contacts:" + contacts.length);
-                if (contacts!=null) {
-                    ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
-                    ArrayList<Contact> list = Utils.array2List(contacts);
-                    contactList.clear();
-                    contactList.addAll(list);
-                    HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
+            public void onResponse(Contact[] response) {
+                if (response != null) {
+                    ArrayList<Contact> contactArrayList = SuperWeChatApplication.getInstance().getContactList();
+                    ArrayList<Contact> list = Utils.array2List(response);
+                    contactArrayList.clear();
+                    contactArrayList.addAll(list);
+                    HashMap<String, Contact> userList =
+                            SuperWeChatApplication.getInstance().getUserList();
                     userList.clear();
                     for (Contact c : list) {
-                        userList.put(c.getMContactCname(), c);
+                        userList.put(c.getMContactCname(),c);
+
+
                     }
                     mContext.sendStickyBroadcast(new Intent("update_contact_list"));
                 }
+
             }
         };
+
     }
 }

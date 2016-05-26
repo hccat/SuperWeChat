@@ -13,8 +13,6 @@
  */
 package cn.ucai.superwechat.adapter;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
@@ -26,14 +24,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.VoiceMessageBody;
-import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.activity.ChatActivity;
 import com.easemob.util.EMLog;
+
+import java.io.File;
+
+import cn.ucai.superwechat.activity.ChatActivity;
+import cn.ucai.superwechat.applib.controller.HXSDKHelper;
 
 public class VoicePlayClickListener implements View.OnClickListener {
 	private static final String TAG = "VoicePlayClickListener";
@@ -56,10 +56,7 @@ public class VoicePlayClickListener implements View.OnClickListener {
 	 * @param message
 	 * @param v
 	 * @param iv_read_status
-	 * @param context
 	 * @param activity
-	 * @param user
-	 * @param chatType
 	 */
 	public VoicePlayClickListener(EMMessage message, ImageView v, ImageView iv_read_status, BaseAdapter adapter, Activity activity,
 			String username) {
@@ -75,9 +72,9 @@ public class VoicePlayClickListener implements View.OnClickListener {
 	public void stopPlayVoice() {
 		voiceAnimation.stop();
 		if (message.direct == EMMessage.Direct.RECEIVE) {
-			voiceIconView.setImageResource(R.drawable.chatfrom_voice_playing);
+			voiceIconView.setImageResource(cn.ucai.superwechat.R.drawable.chatfrom_voice_playing);
 		} else {
-			voiceIconView.setImageResource(R.drawable.chatto_voice_playing);
+			voiceIconView.setImageResource(cn.ucai.superwechat.R.drawable.chatto_voice_playing);
 		}
 		// stop play voice
 		if (mediaPlayer != null) {
@@ -154,9 +151,9 @@ public class VoicePlayClickListener implements View.OnClickListener {
 	private void showAnimation() {
 		// play voice, and start animation
 		if (message.direct == EMMessage.Direct.RECEIVE) {
-			voiceIconView.setImageResource(R.drawable.voice_from_icon);
+			voiceIconView.setImageResource(cn.ucai.superwechat.R.drawable.voice_from_icon);
 		} else {
-			voiceIconView.setImageResource(R.drawable.voice_to_icon);
+			voiceIconView.setImageResource(cn.ucai.superwechat.R.drawable.voice_to_icon);
 		}
 		voiceAnimation = (AnimationDrawable) voiceIconView.getDrawable();
 		voiceAnimation.start();
@@ -164,7 +161,7 @@ public class VoicePlayClickListener implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		String st = activity.getResources().getString(R.string.Is_download_voice_click_later);
+		String st = activity.getResources().getString(cn.ucai.superwechat.R.string.Is_download_voice_click_later);
 		if (isPlaying) {
 			if (((ChatActivity) activity).playMsgId != null && ((ChatActivity) activity).playMsgId.equals(message.getMsgId())) {
 				currentPlayListener.stopPlayVoice();

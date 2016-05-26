@@ -47,13 +47,20 @@ public class ImageUtils {
         return path;
     }
 
-	public static String getAvatarPath(Context context, String path) {
+	/**
+	 * 返回头像保存的SD卡中的位置
+	 *
+	 * @path
+	 */
+	public static String getAvatarPath(Context context,String path) {
 		File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 		File folder = new File(dir, path);
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
 		return folder.getAbsolutePath();
+
+
 	}
 	
 }
