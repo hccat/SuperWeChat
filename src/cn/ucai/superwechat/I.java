@@ -74,7 +74,7 @@ public interface I {
 	int ID_DEFAULT									=		0;								//ID默认值
 	int UN_READ_MSG_COUNT_DEFAULT					=		0;								//未读消息数量默认值
 	int GROUP_MAX_USERS_DEFAULT 					= 		-1;								//群组最大人数默认值
-	int GROUP_AFFILIATIONS_COUNT_DEFAULT 			= 		1;								//群组最大人数默认值
+	int GROUP_AFFILIATIONS_COUNT_DEFAULT 			= 		0;								//群组最大人数默认值
 	int PERMISSION_NORMAL							= 		0;								//普通用户群组权限
 	int PERMISSION_OWNER							= 		1;								//群组所有者群组权限
 	int AVATAR_TYPE_USER							=		0;								//用户头像

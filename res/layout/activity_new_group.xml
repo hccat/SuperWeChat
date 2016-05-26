@@ -37,6 +37,7 @@
             android:textSize="20sp" />
 
         <Button
+            android:id="@+id/btn_save"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -75,7 +76,7 @@
         android:textSize="18sp" />
 
     <RelativeLayout
-        android:id="@+id/layout_user_avatar"
+        android:id="@+id/layout_group_avatar"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginLeft="10dp"
