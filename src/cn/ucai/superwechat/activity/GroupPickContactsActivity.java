@@ -70,7 +70,10 @@ public class GroupPickContactsActivity extends BaseActivity {
 		// 获取好友列表
 		final ArrayList<Contact> alluserList = new ArrayList<Contact>();
 		for (Contact user : SuperWeChatApplication.getInstance().getUserList().values()) {
-			if (!user.getMContactCname().equals(Constant.NEW_FRIENDS_USERNAME) & !user.getMContactCname().equals(Constant.GROUP_USERNAME) & !user.getMContactCname().equals(Constant.CHAT_ROOM) & !user.getMContactCname().equals(Constant.CHAT_ROBOT))
+			if (!user.getMContactCname().equals(Constant.NEW_FRIENDS_USERNAME)
+					& !user.getMContactCname().equals(Constant.GROUP_USERNAME)
+					& !user.getMContactCname().equals(Constant.CHAT_ROOM)
+					& !user.getMContactCname().equals(Constant.CHAT_ROBOT))
 				alluserList.add(user);
 		}
 		// 对list进行排序
@@ -125,7 +128,6 @@ public class GroupPickContactsActivity extends BaseActivity {
 		if (contacts.length>0) {
 			return contacts;
 		}
-
 		return null;
 	}
 
