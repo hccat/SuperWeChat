@@ -213,8 +213,8 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 			if(mOriginalList==null){
 			    mOriginalList = new ArrayList<Contact>();
 			}
-			EMLog.d(TAG, "contacts original size: " + mOriginalList.size());
-			EMLog.d(TAG, "contacts copy size: " + copyUserList.size());
+			Log.e(TAG, "contacts original size: " + mOriginalList.size());
+			Log.e(TAG, "contacts copy size: " + copyUserList.size());
 			
 			if(prefix==null || prefix.length()==0){
 				results.values = copyUserList;
@@ -226,7 +226,8 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 				for(int i=0;i<count;i++){
 					final Contact user = mOriginalList.get(i);
 					String username = user.getMContactCname();
-					
+
+					String nick = user.getMUserNick();
 					if(username.startsWith(prefixString)){
 						newValues.add(user);
 					}
@@ -236,7 +237,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 	
 	                     // Start at index 0, in case valueText starts with space(s)
 	                     for (int k = 0; k < wordCount; k++) {
-	                         if (words[k].startsWith(prefixString)) {
+	                         if (words[k].contains(prefixString)) {
 	                             newValues.add(user);
 	                             break;
 	                         }
@@ -246,7 +247,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 				results.values=newValues;
 				results.count=newValues.size();
 			}
-			EMLog.d(TAG, "contacts filter results size: " + results.count);
+			Log.e(TAG, "contacts filter results size: " + results.count);
 			return results;
 		}
 
@@ -275,6 +276,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 	        copyUserList.addAll(userList);
 	    }
 	}
-	
+
+
 
 }
