@@ -58,6 +58,28 @@ public class UserUtils {
 		}
 	}
 
+	/**
+	 * 设置群组头像
+	 */
+	public static void setGroupBeanAvatar(String mGroupHxid, NetworkImageView imageView) {
+		if (mGroupHxid!=null&&!mGroupHxid.isEmpty()) {
+			setGroupAvatar(getGroupAvatarPath(mGroupHxid), imageView);
+		}
+	}
+
+	private static void setGroupAvatar(String url, NetworkImageView imageView) {
+		if (url==null||url.isEmpty())
+			return;
+		imageView.setDefaultImageResId(R.drawable.group_icon);
+		imageView.setImageUrl(url,RequestManager.getImageLoader());
+		imageView.setErrorImageResId(R.drawable.group_icon);
+	}
+
+	private static String getGroupAvatarPath(String hxid) {
+		if (hxid!=null&&!hxid.isEmpty())
+			return null;
+		return I.REQUEST_DOWNLOAD_GROUP_AVATAR + hxid;
+	}
 
 	/***
 	 * 设置加载服务器自己的头像
@@ -217,5 +239,12 @@ public class UserUtils {
 			}
 		}
 	}
-    
+	public static String getPinYinFromHanZi(String hanzi) {
+		String pinyin ="";
+		for (int i =0;i<hanzi.length();i++) {
+			String s = hanzi.substring(i, i + 1);
+			pinyin = pinyin + HanziToPinyin.getInstance().get(s).get(0).target.toLowerCase();
+		}
+		return pinyin;
+	}
 }
